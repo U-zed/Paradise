@@ -30,8 +30,8 @@ export default function Navbar() {
         >
           <Link href="/" className="flex items-center">
             <Image
-                src="/images/logo2.jpg"
-              alt="AusNail"
+                src="/images/paradise.jpg"
+              alt="Paradise"
               width={50}
               height={50}
               className="object-contain rounded-full"

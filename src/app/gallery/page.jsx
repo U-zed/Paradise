@@ -1,32 +1,26 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
 export default function GalleryPage() {
-  const [filter, setFilter] = useState("Nails");
-  const [modalImg, setModalImg] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(12);
   const [images, setImages] = useState([]);
-  const [showAll, setShowAll] = useState(false);
-  const galleryRef = useRef(null);
+  const [filter, setFilter] = useState("All");
 
-  /* 🔒 Disable background scroll when modal is open */
-  useEffect(() => {
-    if (modalImg) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+  const categories = [
+    "All",
+    "Nails",
+    "Lashes",
+    "Hairs",
+    "Tattoos",
+    "Jewelry",
+    "Beauty Accessories",
+  ];
 
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [modalImg]);
-
+  /* FETCH */
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "gallery"), (snap) => {
       const data = snap.docs.map((doc) => ({
@@ -39,166 +33,100 @@ export default function GalleryPage() {
     return () => unsub();
   }, []);
 
-  const filteredImages =
-    filter === "Nails" ? images : images.filter((img) => img.category === filter);
+  /* FIXED FILTER (case-insensitive) */
+  const filtered = useMemo(() => {
+    if (filter === "All") return images;
 
-  const visibleImages = filteredImages.slice(0, visibleCount);
-
-  const handleToggleView = () => {
-    if (showAll) {
-      setVisibleCount(12);
-      galleryRef.current?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      setVisibleCount(filteredImages.length);
-    }
-    setShowAll(!showAll);
-  };
+    return images.filter((img) =>
+      (img.category || "").toLowerCase() === filter.toLowerCase()
+    );
+  }, [images, filter]);
 
   return (
-    <div ref={galleryRef} className="min-h-screen bg-white px-4 py-7  relative">
-      <h1 className="text-center text-3xl md:text-4xl font-bold text-pink-700 tracking-widest pb-6">
-        Our Gallery
+    <div className="min-h-screen bg-white px-4 py-10 pt-20">
+
+      {/* HEADER */}
+      <h1 className="text-center text-3xl md:text-4xl font-bold text-red-700">
+        Paradise Gallery
       </h1>
 
-      <p className="text-center text-sm md:text-base text-gray-500 pb-10">
-        A showcase of beauty, precision, and timeless glam.
-        At AusNail, we offer luxurious nail services and products designed to make your hands
-        and feet look flawless. From stunning manicures and pedicures to elegant nail designs,
-        every detail is crafted to bring out your confidence and style.
+      <p className="text-center text-sm text-gray-500 mt-2 mb-6">
+        Where Beauty Comes to Life ✨
       </p>
 
-      {/* FILTER */}
-      {/* <div className="flex justify-center gap-3 mb-8 flex-wrap">
-        {["Nails", "Lashes", "Hairs"].map((cat) => (
-          <button
-            key={cat}
-            className={`px-3 py-1 rounded-full font-semibold text-sm ${filter === cat
-              ? "bg-purple-600 text-white"
-              : "bg-gray-300 text-gray-800 hover:bg-gray-200"
-              }`}
-            onClick={() => {
-              setFilter(cat);
-              setVisibleCount(12);
-              setShowAll(false);
-            }}
-          >
-            {cat}
-          </button>
-        ))}
-      </div> */}
+      {/* 🔥 STICKY FILTER BAR */}
+      {/* 🔥 STICKY FILTER BAR (UNDER NAVBAR) */}
+<div
+  className="sticky z-40 bg-white py-3 border-b mb-6 flex flex-wrap justify-center gap-2"
+  style={{ top: "70px" }} // 👈 adjust to your navbar height
+>
+  {categories.map((cat) => (
+    <button
+      key={cat}
+      onClick={() => setFilter(cat)}
+      className={`px-3 py-1 rounded-full text-sm border transition-all ${
+        filter === cat
+          ? "bg-red-700 text-white"
+          : "bg-white text-gray-700"
+      }`}
+    >
+      {cat}
+    </button>
+  ))}
+</div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 relative z-30">
-        <AnimatePresence>
-          {visibleImages.map((img) => (
-            <motion.div
-              key={img.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              className="relative cursor-pointer overflow-hidden rounded-lg shadow-md"
-              onClick={() => setModalImg(img)}
-            >
+      {/* MASONRY GRID */}
+      <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+
+        {filtered.map((img) => (
+          <motion.div
+            key={img.id}
+            className="break-inside-avoid relative rounded-xl overflow-hidden shadow-md bg-white"
+          >
+
+            {/* IMAGE */}
+            <div className="relative">
+
               <Image
                 src={img.url}
-                alt="Gallery Image"
-                width={400}
-                height={400}
-                className="object-cover w-full h-full"
+                alt={img.title}
+                width={500}
+                height={500}
+                className="w-full h-auto object-cover"
               />
 
-              {img.title && (
-                <div className="absolute bottom-0 w-full bg-black/50 text-white text-xs font-semibold p-1 text-center">
-                  {img.title}
-                </div>
-              )}
-            </motion.div>
+              {/* 🖼 LOGO WATERMARK (KEEPED) */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <Image
+                  src="/images/logo.jpg"
+                  alt="logo"
+                  width={120}
+                  height={120}
+                  className="opacity-20"
+                />
+              </div>
+            </div>
 
-          ))}
-        </AnimatePresence>
+            {/* DESCRIPTION (KEEPED) */}
+            <div className="p-2">
+              <p className="text-xs font-semibold text-gray-700">
+                {img.title}
+              </p>
 
-        {visibleImages.length === 0 && (
-          <p className="col-span-full text-center text-gray-500 text-sm mt-4">
-            No images available in this category yet.
-          </p>
-        )}
+              <p className="text-[10px] text-gray-400 capitalize">
+                {img.category}
+              </p>
+            </div>
+
+          </motion.div>
+        ))}
       </div>
 
-      {/* VIEW MORE / LESS */}
-      {filteredImages.length > 12 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="sticky bottom-6 flex justify-center z-40"
-        >
-          <button
-            onClick={handleToggleView}
-            className="px-5 py-2 bg-blue-900 text-white rounded-xl font-semibold text-sm shadow-lg"
-          >
-            {showAll ? "View Less" : "View More"}
-          </button>
-        </motion.div>
-      )}
-
-      {/* MODAL */}
-      {modalImg && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-2 cursor-pointer"
-          onClick={() => setModalImg(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="relative max-w-3xl w-full"
-          >
-            <PreviewImage modalImg={modalImg} />
-          </motion.div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ------------------------------------
-   PREVIEW IMAGE (TITLE + WATERMARK)
------------------------------------- */
-function PreviewImage({ modalImg }) {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <div className="relative">
-      {/* IMAGE */}
-      <Image
-        src={modalImg.url}
-        alt="Preview"
-        className="rounded-xl object-contain w-full max-h-[90vh]"
-        width={0}
-        height={0}
-        sizes="100vw"
-        onLoad={() => setLoaded(true)}
-        priority
-      />
-
-      {/* WATERMARK (after image loads) */}
-      {loaded && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <Image
-            src="/images/logo.jpg"
-            alt="AusNail"
-            width={300}
-            height={300}
-            className="object-contain opacity-30 "
-            priority
-          />
-        </div>
-      )}
-
-      {/* TITLE */}
-      {modalImg.title && (
-        <div className="absolute top-0 left-1/2 mt-3 text-center text-white text-sm font-semibold tracking-wide">
-          {modalImg.title}
-        </div>
+      {/* EMPTY */}
+      {filtered.length === 0 && (
+        <p className="text-center text-gray-400 mt-10 text-sm">
+          No images found in this category ✨
+        </p>
       )}
     </div>
   );

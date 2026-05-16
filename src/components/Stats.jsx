@@ -5,22 +5,22 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Stats() {
   const stats = [
-    { number: 200, suffix: "+", label: "Happy Clients" },
-    { number: 50, suffix: "+", label: "Beauty Products" },
-    { number: 20, suffix: "+", label: "Skilled Stylists" },
-    { number: 5, suffix: "", label: "Years of Excellence" },
+    { number: 50, suffix: "+", label: "Happy Clients" },
+    { number: 10, suffix: "+", label: "Premium Beauty Services" },
+    { number: 5, suffix: "+", label: "Skilled Nail Technicians" },
+    { number: 1, suffix: "", label: "Years of Luxury Experience" },
   ];
 
   return (
-    <main className="h-fit bg-white pt-8 px-6">
+    <main className="h-fit bg-white pt-10 px-6">
       <motion.div
         className="max-w-5xl mx-auto text-center"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-2xl sm:text34xl md:text-4xl font-bold text-orange-700 mb-10">
-        AusNail in Numbers
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-700 mb-10">
+          Paradise in Numbers
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
@@ -48,8 +48,8 @@ function StatCard({ number, suffix, label, index }) {
     if (!isInView) return;
 
     let start = 0;
-    const duration = 2000; // 2 seconds
-    const increment = number / (duration / 16); // ~60fps
+    const duration = 2000;
+    const increment = number / (duration / 16);
     let frame;
 
     const animate = () => {
@@ -71,16 +71,19 @@ function StatCard({ number, suffix, label, index }) {
   return (
     <motion.div
       ref={ref}
-      className="bg-pink-100 border border-pink-200 rounded-2xl shadow-md py-8 sm:py-10 px-4 mb-4"
+      className="bg-gradient-to-br from-pink-50 to-white border border-pink-200 rounded-2xl shadow-md py-8 sm:py-10 px-4 mb-4"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{ delay: index * 0.2 }}
     >
-      <h3 className="text-2xl sm:text-3xl md:text-3xl font-bold text-orange-700">
+      <h3 className="text-2xl sm:text-3xl md:text-3xl font-bold text-red-700">
         {count}
         {suffix}
       </h3>
-      <p className="text-gray-600 text-sm sm:text-base mt-2">{label}</p>
+
+      <p className="text-gray-600 text-sm sm:text-base mt-2">
+        {label}
+      </p>
     </motion.div>
   );
 }

@@ -1,17 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-// import Image from "next/image";
 import { Sparkles, Heart, Star, ShieldCheck } from "lucide-react";
 import CEOCard from "@/components/CEOCard";
 
 export default function About() {
   return (
-    <main className="overflow-hidden ">
-      {/* ABOUT AusNailSECTION */}
+    <main className="overflow-hidden">
+      {/* ABOUT PARADISE SECTION */}
       <section className="relative min-h-screen bg-gradient-to-b from-pink-100 to-white pt-12 py-8 px-6 md:px-16">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
-          {/* Left side: Image */}
+
+          {/* Left side */}
           <motion.div
             className="w-full md:w-1/2"
             initial={{ opacity: 0, x: -40 }}
@@ -19,20 +19,11 @@ export default function About() {
             transition={{ duration: 0.8 }}
           >
             <div className="rounded-2xl overflow-hidden py-9 md:py-5">
-              <CEOCard/>
-
-              {/* <Image
-                src="/images/logo.png"
-                alt="AusNail"
-                width={400}
-                height={400}
-                className="object-cover w-full h-[420px]"
-                priority
-              /> */}
+              <CEOCard />
             </div>
           </motion.div>
 
-          {/* Right side: Text */}
+          {/* Right side */}
           <motion.div
             className="w-full md:w-1/2 text-center md:text-left"
             initial={{ opacity: 0, x: 40 }}
@@ -45,23 +36,24 @@ export default function About() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              About Us
+              About Paradise
             </motion.h2>
 
-        <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-  Welcome to <span className="font-semibold text-orange-700">AusNail</span>, where beauty meets confidence. At AusNail, we believe every woman deserves to feel radiant, empowered, and effortlessly elegant—starting with flawless nails.
+           <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
+  Welcome to <span className="font-semibold text-orange-700">Paradise</span> —
+  where beauty lives and confidence is created. We are a full luxury beauty studio dedicated to helping you look and feel your absolute best through a wide range of professional services.
 </p>
 
 <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-  Our story began with a passion for creating stunning nails that enhance your natural beauty. From expertly crafted manicures and pedicures to intricate designs and luxurious nail treatments, we celebrate individuality and style in every detail.
+  At Paradise, we specialize in flawless nails, custom tattoos, microblading, wig installation, and lash enhancements — all delivered with precision, creativity, and care. Every service is designed to enhance your natural beauty and reflect your unique style.
 </p>
 
 <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-  Whether it’s a quick polish refresh or a full nail transformation, <span className="font-semibold text-orange-700">AusNail</span> is here to make your nails look flawless and help you feel your most confident, beautiful self.
+  Soon, we’ll also be expanding into luxury beauty accessories and jewelry, giving you everything you need to complete your glow-up in one place. At <span className="font-semibold text-orange-700">Paradise</span>, beauty is not just a service — it’s an experience.
 </p>
 
             <motion.button
-              className="mt-5 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-800 transition-all shadow-lg text-sm sm:text-base md:text-base"
+              className="mt-6 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-800 transition-all shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -70,21 +62,21 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Floating background effects */}
+        {/* Floating effects */}
         <motion.div
-          className="absolute top-20 left-10 w-32 h-32 bg-blue-200 rounded-full blur-3xl opacity-30"
+          className="absolute top-20 left-10 w-32 h-32 bg-pink-200 rounded-full blur-3xl opacity-30"
           animate={{ y: [0, 30, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        ></motion.div>
+        />
 
         <motion.div
-          className="absolute bottom-10 right-10 w-40 h-40 bg-pink-100 rounded-full blur-3xl opacity-40"
+          className="absolute bottom-10 right-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-40"
           animate={{ y: [0, -25, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        ></motion.div>
+        />
       </section>
 
-      {/* WHY CHOOSE US SECTION */}
+      {/* WHY CHOOSE US */}
       <section className="bg-white py-9 px-6 md:px-16">
         <motion.div
           className="max-w-6xl mx-auto text-center"
@@ -93,31 +85,31 @@ export default function About() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="font-playfair text-2xl sm:text-3xl md:text-5xl font-bold leading-tight text-blue-900 mb-10">
-            Why Choose Us?
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-blue-900 mb-10">
+            Why Choose Paradise?
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 icon: <Sparkles className="w-10 h-10 text-orange-700" />,
-                title: "Premium Quality",
-                text: "We use only the finest, skin-loving ingredients and luxury beauty products.",
+                title: "Luxury Quality",
+                text: "Premium products and flawless finishes designed for long-lasting beauty.",
               },
               {
                 icon: <Heart className="w-10 h-10 text-orange-700" />,
-                title: "Personalized Care",
-                text: "Every treatment is tailored uniquely to highlight your natural beauty.",
+                title: "Personal Care",
+                text: "Every service is tailored to match your unique style and personality.",
               },
               {
                 icon: <Star className="w-10 h-10 text-orange-700" />,
-                title: "Expert Stylists",
-                text: "Our passionate and skilled professionals bring out your most confident self.",
+                title: "Skilled Artists",
+                text: "Expert nail technicians dedicated to perfection in every detail.",
               },
               {
                 icon: <ShieldCheck className="w-10 h-10 text-orange-700" />,
-                title: "Trusted by Many",
-                text: "Thousands of satisfied clients trust AusNail for their beauty and wellness needs.",
+                title: "Trusted Beauty Spot",
+                text: "A growing community of clients who trust Paradise for their glow-up.",
               },
             ].map((item, index) => (
               <motion.div
@@ -128,11 +120,15 @@ export default function About() {
                 transition={{ delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="flex flex-col items-center mb-4">{item.icon}</div>
-                <h3 className="text-lg sm:text-xl md:text-xl font-semibold text-blue-900 mb-2">
+                <div className="flex flex-col items-center mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-sm sm:text-base md:text-base text-gray-600">{item.text}</p>
+                <p className="text-sm sm:text-base text-gray-600">
+                  {item.text}
+                </p>
               </motion.div>
             ))}
           </div>

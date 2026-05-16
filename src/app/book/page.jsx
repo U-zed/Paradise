@@ -56,14 +56,15 @@ export default function Booking() {
     { group: "Nail Art", name: "3D Nail Art", price: 2000 },
     { group: "Nail Art", name: "Chrome", price: 1500 },
 
-    // { group: "Lashes", name: "Classic Lashes", price: 10000 },
-    // { group: "Lashes", name: "Hybrid Lashes", price: 12000 },
-    // { group: "Lashes", name: "Volume Lashes", price: 15000 },
-    // { group: "Lashes", name: "Mega Volume Lashes", price: 17000 },
+    { group: "Lashes", name: "Classic Lashes", price: 10000 },
+    { group: "Lashes", name: "Hybrid Lashes", price: 12000 },
+    { group: "Lashes", name: "Volume Lashes", price: 15000 },
+    { group: "Lashes", name: "Mega Volume Lashes", price: 17000 },
 
     { group: "Extras", name: "Acrylic Removal (Hands)", price: 2000 },
-    { group: "Extras", name: "Gel Polish Removal (Hands)", price: 1000 },
+    { group: "Extras", name: "Gel Polish Removal (Hands)", price: 1500 },
     { group: "Extras", name: "Toes Removal", price: 1500 },
+    { group: "Extras", name: "Lash Removal", price: 5000 },
   ];
 
   /* GROUP SERVICES */
@@ -140,15 +141,16 @@ export default function Booking() {
         {/* LEFT */}
         {!submitted && (
           <div className="bg-gradient-to-br from-blue-500 to-gray-50 p-10 flex flex-col justify-center text-center">
-            <h2 className="text-3xl font-extrabold text-orange-600 mb-4">
-              AusNail
+            <h2 className="text-3xl font-extrabold text-red-700">
+              Paradise
             </h2>
+            <p className="mb-4 text-orange-800 font-semibold  rounded-xl px-4 1">
+              Where Beauty Lives!
+            </p>
             <p className="text-gray-900">
-              Pamper yourself with our luxury Valantine beauty treats. Book now and glow all season!
+              Pamper yourself with our luxury beauty treats. Book now and glow all season!
             </p>
-            <p className="mt-4 text-red-600 font-semibold bg-white rounded-xl px-4 py-2">
-              💅 Valentine Promo: Enjoy Special Discounts on All Nail Services! 💅
-            </p>
+
           </div>
         )}
 
@@ -297,7 +299,7 @@ export default function Booking() {
                 </AnimatePresence>
                 {/* Double nails  */}
                 <div className="bg-gray-100 p-3 rounded">
-                  <p className="text-orange-600 text-xs font-bold ">Double nails are recommended for durability. Single nails are more prone to breakage if not properly handled. <b>Click "Nail Art" above to select double Nails for gel</b>.</p>
+                  <p className="text-red-700 text-xs font-bold ">Double nails are recommended for durability. Single nails are more prone to breakage if not properly handled. <b>Click "Nail Art" above to select double Nails for gel</b>.</p>
                 </div>
                 {/* date and time */}
                 <div className="grid grid-cols-2 gap-4 text-black">
@@ -323,7 +325,10 @@ export default function Booking() {
                   </label>
                   {homeService && (
                     <div className="space-y-2">
-                      <p className="text-purple-700 text-sm font-semibold">
+                      <p className="text-sm text-black">
+                        ⚠️ Sorry, home service is currently unavailable at the moment. 
+                      </p>
+                      {/* <p className="text-purple-700 text-sm font-semibold">
                         Home Service Fee: ₦{homeServiceFee.toLocaleString()}
                       </p>
                       <div className="flex flex-col gap-1 text-black">
@@ -337,7 +342,7 @@ export default function Booking() {
                           placeholder="Enter address:"
                           className="border border-blue-700 rounded-xl px-4 py-2 outline-0 focus:bg-gray-100"
                         />
-                      </div>
+                      </div> */}
                     </div>
                   )}
                 </div>
@@ -374,8 +379,8 @@ export default function Booking() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6 }}
                 className="flex flex-col items-center text-center space-y-4">
-                <h3 className="text-xl md:text-2xl font-semibold text-blue-900">We Got Your Booking!</h3>
-                <p className="text-black text-sm md:text-base"> Thank you,  <span className="text-orange-700 italic">{name}</span>, for choosing AusNail! <br /> We will reach out to you via <span className="italic text-orange-700">{contact}</span> for confirmation. </p>
+                <h3 className="text-xl md:text-2xl font-semibold text-red-700">We Got Your Booking!</h3>
+                <p className="text-black text-sm md:text-base"> Thank you,  <span className="text-blue-900 italic">{name}</span>, for choosing Paradise! <br /> We will reach out to you via <span className="italic text-blue-900">{contact}</span> for confirmation. </p>
                 <div className="bg-orange-50 text-black rounded-xl border border-orange-200 text-sm md:text-base w-full max-w-md overflow-hidden">
                   <div className="grid grid-cols-2 border border-white py-2 px-3">
                     <p className="text-left">Date & Time:</p>

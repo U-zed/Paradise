@@ -30,7 +30,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="relative min-h-screen bg-red-50 items-center pt-16 pb-10">
+    <main className="relative min-h-screen bg-red-50 items-center pt-10">
       <div>
         <motion.h2
           className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-blue-900 pb-3 pt-10"
@@ -38,13 +38,13 @@ export default function Contact() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          Contact Us
+  Get in Touch with Paradise
         </motion.h2>
 
         <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg mb-8 px-5">
-          We’d love to hear from you! Whether you have a question, want to
-          collaborate, or just say hi, our beauty team is here for you.
-        </p>
+  We’d love to hear from you. Whether you’re booking a beauty service, asking a question,
+  or exploring our upcoming accessories and jewelry collection — the Paradise team is here for you.
+</p>
       </div>
 
       <section className="grid md:grid-cols-2 gap-6 md:gap-10 p-6 md:p-12">
@@ -104,26 +104,23 @@ export default function Contact() {
         <div className="mx-auto">
           {/* Contact Info */}
           <motion.div
-            className="text-left my-10 grid md:grid-cols-2 text-gray-700 text-sm sm:text-base md:text-base"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            <p>📍 Opp Woman Boku Junction Kubwa Village Market, FCT</p>
-            <p>📞 +234 903 111 8322</p>
-            {/* <p>📧 evecollections@gmail.com</p> */}
-            <p>
-              Give us a follow on{" "}
-              <a
-                href="https://www.tiktok.com/@ausnail"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-orange-700 font-semibold hover:underline"
-              >
-                Tiktok
-              </a>
-            </p>
-          </motion.div>
+  className="text-left my-10 grid md:grid-cols-2 text-gray-700 text-sm sm:text-base md:text-base"
+>
+  <p>📍 Beside Musa Diko House, Jaji Street, Kubwa Village Market, FCT</p>
+  <p>📞 +234 903 111 8322</p>
+
+  <p>
+    Follow us on{" "}
+    <a
+      href="https://www.tiktok.com/@Paradise.wbl"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-orange-700 font-semibold hover:underline"
+    >
+      TikTok
+    </a>
+  </p>
+</motion.div>
 
 
           <motion.div
@@ -133,11 +130,13 @@ export default function Contact() {
             transition={{ delay: 0.5, duration: 0.7 }}
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4">
-              Ready to Glow with Confidence? ✨
-            </h2>
-            <p className="mb-6 text-pink-100 text-sm sm:text-base md:text-base max-w-md">
-              Book your appointment today or browse our exclusive AusNail.
-            </p>
+  Your Glow-Up Starts at Paradise 
+</h2>
+
+<p className="mb-6 text-pink-100 text-sm sm:text-base md:text-base max-w-md">
+  Book your appointment today for nails, tattoos, microblading, wigs, lashes,
+  and luxury beauty transformations or explore our upcoming beauty collections.
+</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
               <Link
                 href="/book"

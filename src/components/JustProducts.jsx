@@ -5,9 +5,8 @@ import { db } from "@/firebase/config";
 import { collection, onSnapshot } from "firebase/firestore";
 import { motion, useMotionValue, animate } from "framer-motion";
 import Image from "next/image";
-import GalleryPage from "../gallery/page";
 
-export default function ProductsPage() {
+export default function JustProducts() {
   const [pressOnProducts, setPressOnProducts] = useState([]);
   const [nailsAndLashesProducts, setNailsAndLashesProducts] = useState([]);
   const [hairAndSkinProducts, setHairAndSkinProducts] = useState([]);
@@ -215,7 +214,7 @@ export default function ProductsPage() {
     <main className="min-h-screen bg-white">
 
       {/* HERO */}
-      <section className="text-center pt-24 pb-10 bg-gradient-to-b from-orange-100 to-white">
+      <section className="text-center py-8 bg-gradient-to-b from-orange-100 to-white">
         <motion.h1
           className="text-3xl md:text-5xl font-bold text-red-700 tracking-wide"
           initial={{ opacity: 0, y: -30 }}
@@ -224,7 +223,7 @@ export default function ProductsPage() {
           Paradise Products
         </motion.h1>
 
-        <p className="text-gray-600 text-sm md:text-lg mt-3 px-5">
+        <p className="text-gray-600 text-sm md:text-lg mt-2 px-5">
           Luxury beauty products curated to elevate your glow ✨
         </p>
       </section>
@@ -251,8 +250,6 @@ export default function ProductsPage() {
         bgTo="to-yellow-100"
       />
 
-      {/* GALLERY */}
-      <GalleryPage />
     </main>
   );
 }

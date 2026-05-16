@@ -30,7 +30,7 @@ export default function CEOCard() {
         >
           <Image
             src="/images/ceo.jpg"
-            alt="AusNail CEO"
+            alt="Paradise CEO"
             width={170}
             height={170}
             className="rounded-full object-cover shadow-xl ring-3 ring-orange-600"

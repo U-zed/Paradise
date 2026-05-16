@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "AusNail",
-  description: "Let AusNail you!",
+  title: "Paradise",
+  description: "Where Beauty Lives!",
 };
 
 export default function RootLayout({ children }) {

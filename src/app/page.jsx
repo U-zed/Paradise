@@ -9,10 +9,11 @@ import FAQ from "./faq/page";
 import Stats from "@/components/Stats";
 import Testimonials from "@/components/Testimonials";
 import About from "./about/page";
+import JustProducts from "@/components/JustProducts";
 
 export default function Home() {
   return (
-    <main className="text-center pt-28 bg-blue-50 min-h-screen">
+    <main className="text-center pt-28 bg-orange-50 min-h-screen">
 
       {/* Hero Section */}
       <motion.section
@@ -22,16 +23,17 @@ export default function Home() {
         transition={{ duration: 1 }}
         className="pb-20 px-5"
       >
-        <h1 className="  text-4xl sm:text-5xl md:text-6xl font-bold text-blue-950 mb-4">
-          Welcome to <b className="text-pink-700 font-mono">AusNail</b>
+        <h1 className="  text-4xl sm:text-5xl md:text-6xl font-bold text-blue-950 mb-1">
+          Welcome to <b className="text-red-700 font-mono">Paradise</b>
         </h1>
+        <p className="text-base font-bold p-3 font-mono text-red-700 mb-4">Where Beauty Lives!</p>
         <p className="mt-2 text-sm sm:text-base md:text-lg max-w-2xl mx-auto text-gray-800">
-          Luxury nail services designed to make your hands unforgettable.
-          Book your appointment or shop our latest nail essentials. <p className="text-base font-bold p-3 font-mono text-pink-700">Let AusNail you!</p>
+          Step into Paradise — your luxury destination for flawless nail care and beauty.
+          From elegant manicures to premium nail essentials, we create looks that leave a lasting impression.
+          Book your appointment today and let your beauty shine effortlessly.
         </p>
-
         {/* Promo Banner */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{
             opacity: 1,
@@ -45,9 +47,10 @@ export default function Home() {
           }}
           className="text-center bg-red-700 text-white px-4 py-3 rounded-full shadow-md mt-5 inline-block"
         >
-          <p>🎄 Valantine Special Promo 🎄</p>
-          <p className="text-sm"> Celebrate love with exclusive nail offers — because perfect nails are always in season</p>
-        </motion.div>
+          <p>🎉 Grand Opening Promo 🎉</p>
+          <p className="text-sm"> Celebrate our grand opening with 5 days of beauty deals. Get semi-permanent tattoos/micro blading from just 10k, gel polish from 3k, and acrylic nails from 5k!
+          </p>
+        </motion.div> */}
 
         <motion.div className="mt-8 px-7 flex flex-col sm:flex-row justify-center gap-4">
           <Link
@@ -55,7 +58,7 @@ export default function Home() {
             className="bg-blue-950 text-white px-6 py-3 rounded-full shadow-md
              hover:bg-white hover:text-blue-950 border border-blue-950 transition-all text-sm sm:text-base md:text-base"
           >
-            Shop Products
+            Products & Services
           </Link>
           <Link
             href="/book"
@@ -68,7 +71,7 @@ export default function Home() {
 
       {/* Products */}
       <section id="services">
-        <ProductsPage />
+        <JustProducts />
       </section>
 
       {/* Upcoming Services */}
