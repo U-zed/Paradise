@@ -56,15 +56,23 @@ export default function Booking() {
     { group: "Nail Art", name: "3D Nail Art", price: 2000 },
     { group: "Nail Art", name: "Chrome", price: 1500 },
 
-    { group: "Lashes", name: "Classic Lashes", price: 10000 },
-    { group: "Lashes", name: "Hybrid Lashes", price: 12000 },
-    { group: "Lashes", name: "Volume Lashes", price: 15000 },
-    { group: "Lashes", name: "Mega Volume Lashes", price: 17000 },
+    { group: "Lashes", name: "Classic", price: 11000 },
+    { group: "Lashes", name: "Hybrid", price: 15000 },
+    { group: "Lashes", name: "Full Hybrid", price: 17000 },
+    { group: "Lashes", name: "Volume", price: 20000 },
+    { group: "Lashes", name: "Mega Volume", price: 25000 },
 
+    { group: "Extras", name: "Whispy", price: 5000 },
+    { group: "Extras", name: "Bottom Lashes", price: 5000 },
+    { group: "Extras", name: "Lash Removal", price: 2000 },
     { group: "Extras", name: "Acrylic Removal (Hands)", price: 2000 },
     { group: "Extras", name: "Gel Polish Removal (Hands)", price: 1500 },
     { group: "Extras", name: "Toes Removal", price: 1500 },
-    { group: "Extras", name: "Lash Removal", price: 5000 },
+
+    { group: "Enhancements", name: "Micro Blading", price: 35000 },
+    { group: "Enhancements", name: "Studio Glam", price: 20000 },
+    { group: "Enhancements", name: "Birthday Glam", price: 25000 },
+    { group: "Enhancements", name: "Semi-perm Tattoo", price: "10000 (Upwards)" },
   ];
 
   /* GROUP SERVICES */
@@ -248,6 +256,7 @@ export default function Booking() {
                                   "Gel (Hands)",
                                   "Toe Nails",
                                   "Extras",
+                                  "Enhancements",
                                   "Lashes",
                                 ];
 
@@ -326,7 +335,7 @@ export default function Booking() {
                   {homeService && (
                     <div className="space-y-2">
                       <p className="text-sm text-black">
-                        ⚠️ Sorry, home service is currently unavailable at the moment. 
+                        ⚠️ Sorry, home service is currently unavailable at the moment.
                       </p>
                       {/* <p className="text-purple-700 text-sm font-semibold">
                         Home Service Fee: ₦{homeServiceFee.toLocaleString()}
