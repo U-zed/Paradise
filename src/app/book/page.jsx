@@ -69,10 +69,10 @@ export default function Booking() {
     { group: "Extras", name: "Gel Polish Removal (Hands)", price: 1500 },
     { group: "Extras", name: "Toes Removal", price: 1500 },
 
-    { group: "Enhancements", name: "Micro Blading", price: 35000 },
-    { group: "Enhancements", name: "Studio Glam", price: 20000 },
-    { group: "Enhancements", name: "Birthday Glam", price: 25000 },
-    { group: "Enhancements", name: "Semi-perm Tattoo", price: "10000 (Upwards)" },
+    { group: "Beauty Enhancements", name: "Micro Blading", price: 35000 },
+    { group: "Beauty Enhancements", name: "Studio Glam", price: 20000 },
+    { group: "Beauty Enhancements", name: "Birthday Glam", price: 25000 },
+    { group: "Beauty Enhancements", name: "Semi-perm Tattoo", price: "10000 (Upwards)" },
   ];
 
   /* GROUP SERVICES */
@@ -256,7 +256,7 @@ export default function Booking() {
                                   "Gel (Hands)",
                                   "Toe Nails",
                                   "Extras",
-                                  "Enhancements",
+                                  "Beauty Enhancements",
                                   "Lashes",
                                 ];
 
