@@ -147,8 +147,8 @@ export default function StudentForm() {
         </div>
 
         {/* BASIC INFO */}
-        <div className="grid md:grid-cols-2 mx-auto gap-2">
-          <div>
+        <div className="grid md:grid-cols-2 mx-auto gap-3">
+          <div className="grid gap-2">
             <label htmlFor="" className="text-black font-normal">Name: </label>
             <input
               name="name"
@@ -159,22 +159,18 @@ export default function StudentForm() {
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
           </div>
-          <div>
+          <div className="grid gap-2">
             <label htmlFor="" className="text-black font-normal ">Contact: </label>
             <input
-              type="number"
               name="phone"
-              placeholder="Enter Phone Number"
+              placeholder="Enter Phone Number/Email"
               value={form.phone}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
           </div>
-        </div>
-
-        <div className="grid md:grid-cols-2  gap-2">
-          <div>
+          <div className="grid gap-2">
             <label htmlFor="" className="text-black font-normal">Address: </label>
 
             <input
@@ -185,45 +181,41 @@ export default function StudentForm() {
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
           </div>
-          <div>
+          <div className="grid gap-2">
             <label htmlFor="" className="text-black font-normal">Date: </label>
-
             <input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl text-black mt-1"
+              className="w-full border p-3 rounded-xl text-black mt-1 w-full"
             />
           </div>
-        </div>
-
-        <div className="gap-2">
-          <p className="text-black font-normal">Guardian/Emergency Contact: </p>
-          <div className="grid grid-cols-2 gap-2 mt-1">
+          <div className="grid gap-2">
+            <label htmlFor="" className="text-black font-normal">Emergency Contact Name: </label>
             <input
               name="emergencyName"
-              placeholder="Enter Name"
+              placeholder="Enter Full Name"
               value={form.emergencyName}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
+          </div>
+
+          <div className="grid gap-2">
+            <label htmlFor="" className="text-black font-normal">Emergency Contact Phone No: </label>
             <input
-              type="number"
               name="emergencyPhone"
-              placeholder="Enter Phone Number"
+              placeholder="Enter Phone Number/Email"
               value={form.emergencyPhone}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
           </div>
-        </div>
-
-        {/* PACKAGES AND PRICES */}
-        <div className="grid grid-cols-2  gap-2">
-          <div>
+          {/* PACKAGES AND PRICES */}
+          <div className="grid gap-2">
             <label htmlFor="" className="text-black font-normal">Select Service: </label>
             <select
               name="type"
@@ -240,7 +232,7 @@ export default function StudentForm() {
               <option value="Pedicure">Pedicure</option>
             </select>
           </div>
-          <div>
+          <div className="grid gap-2">
             <label htmlFor="" className=" text-black font-normal">Duration: </label>
             <select
               name="duration"
@@ -262,7 +254,6 @@ export default function StudentForm() {
                 </option>
               ))}
             </select>
-
           </div>
         </div>
 
