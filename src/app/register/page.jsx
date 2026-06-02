@@ -1,0 +1,442 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { db } from "@/firebase/config";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { X } from "lucide-react";
+
+export default function StudentForm() {
+  const [loading, setLoading] = useState(false);
+  const [showPolicy, setShowPolicy] = useState(false);
+
+  const [form, setForm] = useState({
+    type: "",
+    name: "",
+    phone: "",
+    address: "",
+    emergencyName: "",
+    emergencyAddress: "",
+    startDate: "",
+    duration: "",
+    agree: false,
+  });
+
+  const servicePackages = {
+    Nails: [
+      { label: "1 Month", price: 60000 },
+      { label: "2 Months", price: 100000 },
+      { label: "4 Months", price: 150000 },
+    ],
+
+    Lashes: [
+      { label: "2 Weeks ", price: 85000 },
+      { label: "1 Months", price: 120000 },
+      { label: "2 Months", price: 200000 },
+    ],
+
+    "Micro Blading": [
+      { label: "2 Weeks ", price: 100000 },
+      { label: "1 Months", price: 150000 },
+      { label: "2 Months", price: 250000 },
+    ],
+
+    Makeover: [
+      { label: "1 Month", price: 100000 },
+      { label: "4 Months", price: 150000 },
+    ],
+
+    Pedicure: [
+      { label: "1 Month", price: 40000 },
+      { label: "2 Months", price: 70000 },
+      { label: "4 Months", price: 100000 },
+    ],
+  };
+
+  const packages = servicePackages[form.type] || [];
+  const selectedPackage = useMemo(() => {
+    return packages.find((p) => p.label === form.duration);
+  }, [packages, form.duration]);
+
+  const totalPrice = selectedPackage?.price || 0;
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (name === "type") {
+      setForm((prev) => ({
+        ...prev,
+        type: value,
+        duration: "",
+      }));
+      return;
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!form.type) return alert("Select training type");
+    if (!form.agree) return alert("You must accept rules & policy");
+
+    setLoading(true);
+
+    try {
+      await addDoc(collection(db, "students"), {
+        ...form,
+        price: totalPrice,
+        status: "pending",
+        createdAt: serverTimestamp(),
+      });
+
+      alert("Registration successful 💅");
+
+      setForm({
+        type: "",
+        name: "",
+        phone: "",
+        address: "",
+        emergencyName: "",
+        emergencyAddress: "",
+        startDate: "",
+        duration: "",
+        agree: false,
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit application");
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-orange-50 px-4 pt-12">
+
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 space-y-5 border-t-4 border-red-700"
+      >
+
+        {/* LOGO HEADER */}
+        <div className="text-center space-y-2">
+          <img
+            src="/images/paradise.jpg"
+            alt="Paradise Logo"
+            className="w-20 h-20 mx-auto object-contain"
+          />
+
+          <p className="text-xl font-bold text-red-700 tracking-wide p-3">
+            Student Registration & Training Agreement Form
+          </p>
+        </div>
+
+        {/* BASIC INFO */}
+        <div className="flex justify-between gap-2">
+          <div>
+            <label htmlFor="" className="text-black font-normal">Name: </label>
+            <input
+              name="name"
+              placeholder="Enter Full Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+          <div>
+            <label htmlFor="" className="text-black font-normal ">Contact: </label>
+            <input
+              name="phone"
+              placeholder="Enter Phone Number"
+              value={form.phone}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2  gap-2">
+          <div>
+            <label htmlFor="" className="text-black font-normal">Address: </label>
+
+            <input
+              name="address"
+              placeholder="Enter Home Address"
+              value={form.address}
+              onChange={handleChange}
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+          <div>
+            <label htmlFor="" className="text-black font-normal">Date: </label>
+
+            <input
+            type="date"
+              name="date"
+              value={form.date}
+              onChange={handleChange}
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+        </div>
+
+        <div className="gap-2">
+          <p className="text-black font-normal">Guardian/Emergency Contact: </p>
+          <div className="grid grid-cols-2 gap-2 mt-1">
+            <input
+              name="emergencyName"
+              placeholder="Enter Name"
+              value={form.emergencyName}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+            <input
+              name="emergencyAddress"
+              placeholder="Enter Phone Number"
+              value={form.emergencyAddress}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+        </div>
+
+{/* PACKAGES AND PRICES */}
+        <div className="grid grid-cols-2  gap-2">
+          <div>
+            <label htmlFor="" className="text-black font-normal">Select Service: </label>
+            <select
+              name="type"
+              value={form.type}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            >
+              <option value="">Select Service</option>
+              <option value="Nails">Nails</option>
+              <option value="Lashes">Lashes</option>
+              <option value="Micro Blading">Micro Blading</option>
+              <option value="Makeover">Makeover</option>
+              <option value="Pedicure">Pedicure</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="" className=" text-black font-normal">Duration: </label>
+            <select
+              name="duration"
+              value={form.duration}
+              onChange={handleChange}
+              required
+              disabled={!form.type}
+              className="w-full border p-3 rounded-xl text-black mt-1 disabled:bg-gray-100"
+            >
+              <option value="">
+                {form.type
+                  ? "Select Duration"
+                  : "Select Service First"}
+              </option>
+
+              {packages.map((p, i) => (
+                <option key={i} value={p.label}>
+                  {p.label} - ₦{p.price.toLocaleString()}
+                </option>
+              ))}
+            </select>
+
+          </div>
+        </div>
+
+
+        {/* PRICE */}
+        {form.duration && (
+          <div className="bg-red-50 text-red-700 p-3 rounded-xl text-center font-bold">
+            Total Fee: ₦{totalPrice.toLocaleString()}
+          </div>
+        )}
+
+        {/* POLICY */}
+        <div className="bg-blue-50 p-4 rounded-xl text-sm text-gray-800 space-y-3">
+
+          <p className="text-sm text-gray-700 leading-relaxed">
+            I, <span><input type="text" className="border-b border-b-1 px-2" />,</span> confirm that all information provided is correct and have read, understood, and
+            agree to abide by the rules and regulations of Paradise WBL Studio
+            throughout my apprenticeship/training period.
+          </p>
+
+          
+          <span
+            onClick={() => setShowPolicy(true)}
+            className="text-red-700 font-bold underline cursor-pointer"
+          >
+            View Training Rules & Regulations
+          </span>
+
+          <label className="flex items-center gap-2 pt-2">
+            <input
+              type="checkbox"
+              name="agree"
+              checked={form.agree}
+              onChange={handleChange}
+            />
+            I agree to the terms and conditions
+          </label>
+        </div>
+
+        {/* SUBMIT */}
+        <button
+          disabled={loading}
+          className="w-full bg-orange-700 hover:bg-orange-800 disabled:opacity-60 text-white p-3 rounded-xl text-sm font-semibold"
+        >
+          {loading ? "Submitting..." : "Submit Application"}
+        </button>
+      </form>
+
+      {/* POLICY MODAL */}
+      <AnimatePresence>
+        {showPolicy && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden"
+            >
+              {/* Header */}
+              <div className="relative border-b px-6 py-4 bg-white">
+                <h2 className="text-xl font-bold text-red-700 text-center pr-10">
+                  RULES & REGULATIONS
+                </h2>
+
+                <button
+                  type="button"
+                  onClick={() => setShowPolicy(false)}
+                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-red-50 transition"
+                  aria-label="Close"
+                >
+                  <X size={22} className="text-red-700" />
+                </button>
+              </div>
+              {/* Scrollable Content */}
+              <div className="max-h-[80vh] overflow-y-auto px-6 py-5">
+                <ol className="space-y-4 text-sm text-gray-800 list-decimal pl-5">
+                  <li>All students must be punctual and attend training sessions regularly.</li>
+
+                  <li>
+                    Training sessions are held three (3) times per week for all courses,
+                    except Nails and Pedicure training which are held four (4) times per week.
+                    Students and instructors may mutually agree on suitable training days and
+                    schedules, provided the required number of weekly sessions is maintained.
+                  </li>
+                  <li>
+                    Absence from class must be communicated to the instructor in advance
+                    whenever possible.
+                  </li>
+
+                  <li>
+                    Students must dress neatly and maintain good personal hygiene at all
+                    times.
+                  </li>
+
+                  <li>
+                    Respect for instructors, fellow students, clients, and salon property is
+                    mandatory.
+                  </li>
+
+                  <li>
+                    Fighting, bullying, gossiping, disrespectful behavior, or the use of
+                    abusive language will not be tolerated.
+                  </li>
+
+                  <li>
+                    Mobile phones should not be used during training sessions except for
+                    learning purposes or with permission.
+                  </li>
+
+                  <li>
+                    Students must actively participate in all practical and theoretical
+                    lessons.
+                  </li>
+
+                  <li>
+                    No student should perform services on clients without the approval or
+                    supervision of the instructor.
+                  </li>
+
+                  <li>
+                    Students are responsible for the proper care of all tools, equipment, and
+                    materials provided during training.
+                  </li>
+
+                  <li>
+                    Workstations must be cleaned and sanitized before and after every
+                    practical session.
+                  </li>
+
+                  <li>
+                    Students must follow all health, safety, and sanitation procedures taught
+                    during training.
+                  </li>
+
+                  <li>
+                    Theft, dishonesty, or damage to salon property may result in immediate
+                    dismissal from the program.
+                  </li>
+
+                  <li>
+                    Students must maintain a professional attitude and conduct themselves in a
+                    manner that reflects positively on the salon.
+                  </li>
+
+                  <li>
+                    Training fees paid are non-refundable except where otherwise approved by
+                    management.
+                  </li>
+
+                  <li>
+                    Certificates will only be issued to students who successfully complete
+                    the training requirements.
+                  </li>
+
+                  <li>
+                    Students are expected to practice regularly and complete all assignments
+                    given by their instructor.
+                  </li>
+
+                  <li>
+                    Any concerns or complaints should be reported directly to management
+                    rather than discussed publicly.
+                  </li>
+
+                  <li>
+                    Repeated violation of these rules may lead to suspension or termination
+                    of the apprenticeship.
+                  </li>
+
+                  <li>
+                    Management reserves the right to amend these rules and take disciplinary
+                    action when necessary.
+                  </li>
+                </ol>
+              </div>
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}

@@ -72,7 +72,7 @@ export default function Booking() {
     { group: "Beauty Enhancements", name: "Micro Blading", price: 35000 },
     { group: "Beauty Enhancements", name: "Studio Glam", price: 20000 },
     { group: "Beauty Enhancements", name: "Birthday Glam", price: 25000 },
-    { group: "Beauty Enhancements", name: "Semi-perm Tattoo", price: "10000 (Upwards)" },
+    { group: "Beauty Enhancements", name: "Semi-perm Tat", price: "10000+" },
   ];
 
   /* GROUP SERVICES */
