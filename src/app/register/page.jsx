@@ -125,7 +125,7 @@ export default function StudentForm() {
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 space-y-5 border-t-4 border-red-700"
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 my-14 space-y-5 "
       >
 
         {/* LOGO HEADER */}
