@@ -66,6 +66,13 @@ export default function Home() {
           >
             Book Appointment
           </Link>
+          <Link
+            href="/register"
+            className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
+  hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
+          >
+            Start Training
+          </Link>
         </motion.div>
       </motion.section>
 

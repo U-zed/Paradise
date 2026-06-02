@@ -9,16 +9,19 @@ import { X } from "lucide-react";
 export default function StudentForm() {
   const [loading, setLoading] = useState(false);
   const [showPolicy, setShowPolicy] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const [form, setForm] = useState({
     type: "",
     name: "",
     phone: "",
     address: "",
+    date: "",
     emergencyName: "",
-    emergencyAddress: "",
-    startDate: "",
+    emergencyPhone: "",
     duration: "",
+    studentSignature: "",
+    guardianSignature: "",
     agree: false,
   });
 
@@ -94,17 +97,19 @@ export default function StudentForm() {
         createdAt: serverTimestamp(),
       });
 
-      alert("Registration successful 💅");
+      setShowSuccess(true);
 
       setForm({
         type: "",
         name: "",
         phone: "",
         address: "",
+        date: "",
         emergencyName: "",
-        emergencyAddress: "",
-        startDate: "",
+        emergencyPhone: "",
         duration: "",
+        studentSignature: "",
+        guardianSignature: "",
         agree: false,
       });
     } catch (err) {
@@ -134,6 +139,11 @@ export default function StudentForm() {
           <p className="text-xl font-bold text-red-700 tracking-wide p-3">
             Student Registration & Training Agreement Form
           </p>
+          {/* SUBHEAD */}
+          <p className="text-sm text-gray-600 max-w-md mx-auto">
+            Join Paradise Training Academy and gain hands-on experience in professional beauty,
+            nail artistry, and salon services. Complete this form to begin your journey with us.
+          </p>
         </div>
 
         {/* BASIC INFO */}
@@ -152,6 +162,7 @@ export default function StudentForm() {
           <div>
             <label htmlFor="" className="text-black font-normal ">Contact: </label>
             <input
+              type="number"
               name="phone"
               placeholder="Enter Phone Number"
               value={form.phone}
@@ -178,7 +189,7 @@ export default function StudentForm() {
             <label htmlFor="" className="text-black font-normal">Date: </label>
 
             <input
-            type="date"
+              type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
@@ -199,9 +210,10 @@ export default function StudentForm() {
               className="w-full border p-3 rounded-xl text-black mt-1"
             />
             <input
-              name="emergencyAddress"
+              type="number"
+              name="emergencyPhone"
               placeholder="Enter Phone Number"
-              value={form.emergencyAddress}
+              value={form.emergencyPhone}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
@@ -209,7 +221,7 @@ export default function StudentForm() {
           </div>
         </div>
 
-{/* PACKAGES AND PRICES */}
+        {/* PACKAGES AND PRICES */}
         <div className="grid grid-cols-2  gap-2">
           <div>
             <label htmlFor="" className="text-black font-normal">Select Service: </label>
@@ -271,7 +283,7 @@ export default function StudentForm() {
             throughout my apprenticeship/training period.
           </p>
 
-          
+
           <span
             onClick={() => setShowPolicy(true)}
             className="text-red-700 font-bold underline cursor-pointer"
@@ -293,7 +305,7 @@ export default function StudentForm() {
         {/* SUBMIT */}
         <button
           disabled={loading}
-          className="w-full bg-orange-700 hover:bg-orange-800 disabled:opacity-60 text-white p-3 rounded-xl text-sm font-semibold"
+          className="w-full bg-blue-950 hover:bg-blue-900 disabled:opacity-60 text-white p-3 rounded-xl text-sm font-semibold"
         >
           {loading ? "Submitting..." : "Submit Application"}
         </button>
@@ -433,6 +445,61 @@ export default function StudentForm() {
                 </ol>
               </div>
 
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* SUCCESSFUL MODAL */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-white w-full max-w-md rounded-2xl p-6 text-center shadow-2xl"
+            >
+              {/* LOGO */}
+              <img
+                src="/images/paradise.jpg"
+                alt="Logo"
+                className="w-16 h-16 mx-auto mb-3 object-contain"
+              />
+
+              {/* TITLE */}
+              <h2 className="text-2xl font-bold text-red-800">
+                Congratulations!
+              </h2>
+
+              {/* MESSAGE */}
+              <p className="text-gray-700 mt-3 leading-relaxed">
+                Your application has been successfully submitted. <br />
+                We appreciate your interest in <b>Paradise Training Program</b>.
+              </p>
+
+              <p className="text-gray-600 mt-3 text-sm">
+                We will contact you via the phone number you provided for
+                <b> payment details and confirmation of your enrollment.</b>
+              </p>
+
+              {/* HIGHLIGHT NOTE */}
+              <div className="mt-4 bg-blue-50 text-red-800 p-3 rounded-xl text-sm">
+                Please ensure your phone is reachable as our team will reach out shortly.
+              </div>
+
+              {/* BUTTON */}
+              <button
+                onClick={() => setShowSuccess(false)}
+                className="mt-6 bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded-xl w-full"
+              >
+                Done
+              </button>
             </motion.div>
           </motion.div>
         )}

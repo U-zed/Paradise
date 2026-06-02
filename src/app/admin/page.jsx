@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Book, MessageSquare, Package, ImageIcon } from "lucide-react";
+import { LogOut, Book, User, MessageSquare, Package, ImageIcon } from "lucide-react";
 
 // Components
 import BookingsAdmin from "@/components/BookingsAdmin";
+import AdminStudentList from "@/components/AdminStudentList";
 import MessagesAdmin from "@/components/MessagesAdmin";
 import ProductsAdmin from "@/components/ProductsAdmin";
 import GalleryAdmin from "@/components/GalleryAdmin";
@@ -117,6 +118,7 @@ export default function AdminPage() {
         <div className="space-y-2 md:space-y-4">
           {[
             { key: "bookings", icon: <Book size={20} />, name: "Bookings" },
+            { key: "students", icon: <User size={20} />, name: "Students" },
             { key: "messages", icon: <MessageSquare size={20} />, name: "Messages" },
             { key: "products", icon: <Package size={20} />, name: "Products" },
             { key: "gallery", icon: <ImageIcon size={20} />, name: "Gallery" },
@@ -160,7 +162,7 @@ export default function AdminPage() {
             exit="exit"
           >
             {activeSection === "bookings" && <BookingsAdmin handleDelete={handleDelete} />}
-            {activeSection === "messages" && <MessagesAdmin handleDelete={handleDelete} />}
+{activeSection === "students" && <AdminStudentList handleDelete={handleDelete} />}            {activeSection === "messages" && <MessagesAdmin handleDelete={handleDelete} />}
             {activeSection === "products" && <ProductsAdmin handleDelete={handleDelete} />}
             {activeSection === "gallery" && <GalleryAdmin />}
           </motion.div>

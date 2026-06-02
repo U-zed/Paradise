@@ -38,13 +38,13 @@ export default function Contact() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-  Get in Touch with Paradise
+          Get in Touch with Paradise
         </motion.h2>
 
         <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg mb-8 px-5">
-  We’d love to hear from you. Whether you’re booking a beauty service, asking a question,
-  or exploring our upcoming accessories and jewelry collection — the Paradise team is here for you.
-</p>
+          We’d love to hear from you. Whether you’re booking a beauty service, asking a question,
+          or exploring our upcoming accessories and jewelry collection — the Paradise team is here for you.
+        </p>
       </div>
 
       <section className="grid md:grid-cols-2 gap-6 md:gap-10 p-6 md:p-12">
@@ -104,23 +104,23 @@ export default function Contact() {
         <div className="mx-auto">
           {/* Contact Info */}
           <motion.div
-  className="text-left my-10 grid md:grid-cols-2 text-gray-700 text-sm sm:text-base md:text-base"
->
-  <p>📍 Beside Musa Diko House, Jaji Street, Kubwa Village Market, FCT</p>
-  <p>📞 +234 903 111 8322</p>
+            className="text-left my-10 grid md:grid-cols-2 text-gray-700 text-sm sm:text-base md:text-base"
+          >
+            <p>📍 Beside Musa Diko House, Jaji Street, Kubwa Village Market, FCT</p>
+            <p>📞 +234 903 111 8322</p>
 
-  <p>
-    Follow us on{" "}
-    <a
-      href="https://www.tiktok.com/@Paradise.wbl"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-orange-700 font-semibold hover:underline"
-    >
-      TikTok
-    </a>
-  </p>
-</motion.div>
+            <p>
+              Follow us on{" "}
+              <a
+                href="https://www.tiktok.com/@Paradise.wbl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-700 font-semibold hover:underline"
+              >
+                TikTok
+              </a>
+            </p>
+          </motion.div>
 
 
           <motion.div
@@ -130,19 +130,26 @@ export default function Contact() {
             transition={{ delay: 0.5, duration: 0.7 }}
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4">
-  Your Glow-Up Starts at Paradise 
-</h2>
+              Your Glow-Up Starts at Paradise
+            </h2>
 
-<p className="mb-6 text-pink-100 text-sm sm:text-base md:text-base max-w-md">
-  Book your appointment today for nails, tattoos, microblading, wigs, lashes,
-  and luxury beauty transformations or explore our upcoming beauty collections.
-</p>
+            <p className="mb-6 text-pink-100 text-sm sm:text-base md:text-base max-w-md">
+              Book your appointment today for nails, tattoos, microblading, wigs, lashes,
+              and luxury beauty transformations or explore our upcoming beauty collections.
+            </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
               <Link
                 href="/book"
                 className="bg-white text-blue-900 font-semibold px-6 py-3 text-sm sm:text-base md:text-base rounded-full hover:bg-pink-100 transition"
               >
                 Book Now
+              </Link>
+              <Link
+                href="/register"
+                className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
+  hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
+              >
+                 Training With Us
               </Link>
               <Link
                 href="/products"

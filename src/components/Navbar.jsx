@@ -13,6 +13,7 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Gallery", href: "/products" },
     { name: "Book Now", href: "/book" },
+    { name: "Start Training", href: "/register" },
     { name: "About", href: "/about" },
     { name: "Contact Us", href: "/contact" },
     { name: "FAQ", href: "/faq" },

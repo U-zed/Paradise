@@ -48,11 +48,12 @@ export default function Footer() {
 
           <ul className="space-y-2 text-sm text-pink-100">
             <li><Link href="/" className="hover:text-white">Home</Link></li>
+            <li><Link href="/book" className="hover:text-white">Book Appointment</Link></li>
+            <li><Link href="/register" className="hover:text-white">Train With Us</Link></li>
             <li><Link href="/about" className="hover:text-white">About Paradise</Link></li>
+            <li><Link href="/contact" className="hover:text-white">Contact Us</Link></li>
             <li><Link href="/products" className="hover:text-white">Our Products</Link></li>
             <li><Link href="/gallery" className="hover:text-white">Gallery</Link></li>
-            <li><Link href="/book" className="hover:text-white">Book Appointment</Link></li>
-            <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
           </ul>
         </motion.div>
 
