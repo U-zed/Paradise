@@ -147,7 +147,7 @@ export default function StudentForm() {
         </div>
 
         {/* BASIC INFO */}
-        <div className="flex justify-between gap-2">
+        <div className="grid md:grid-cols-2 mx-auto gap-2">
           <div>
             <label htmlFor="" className="text-black font-normal">Name: </label>
             <input
@@ -173,7 +173,7 @@ export default function StudentForm() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2  gap-2">
+        <div className="grid md:grid-cols-2  gap-2">
           <div>
             <label htmlFor="" className="text-black font-normal">Address: </label>
 
