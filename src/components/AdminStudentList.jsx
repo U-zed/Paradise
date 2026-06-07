@@ -23,6 +23,15 @@ import {
 export default function AdminStudentList() {
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 2;
+
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+const currentStudents = students.slice(indexOfFirstItem, indexOfLastItem);
+
+const totalPages = Math.ceil(students.length / itemsPerPage);
 
     // 🔄 Real-time fetch
     useEffect(() => {
@@ -67,8 +76,7 @@ export default function AdminStudentList() {
                                     <h2 className="text-base font-semibold text-black text-center uppercase py-5">
                             Trainee Applications
                         </h2>
-            {students.map((student) => (
-                <div
+{currentStudents.map((student) => (                <div
                     key={student.id}
                     className=" p-4 rounded-xl shadow space-y-1 border text-black bg-gray-200"
                 >
@@ -174,6 +182,32 @@ export default function AdminStudentList() {
                     </div>
                 </div>
             ))}
+
+            <div className="flex justify-center items-center gap-4 mt-6 mb-4">
+
+    <button
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+        className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
+    >
+        Prev
+    </button>
+
+    <span className="text-sm font-semibold text-blue-600">
+        Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+        onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+        }
+        disabled={currentPage === totalPages}
+        className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
+    >
+        Next
+    </button>
+
+</div>
         </div>
     );
 }
