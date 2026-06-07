@@ -9,6 +9,15 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import {
+    User,
+    BookOpen,
+    Clock,
+    Phone,
+    Mail,
+    UserCheck,
+    Smartphone,
+} from "lucide-react";
 
 export default function AdminStudentList() {
     const [students, setStudents] = useState([]);
@@ -77,29 +86,39 @@ export default function AdminStudentList() {
                     {/* DETAILS */}
                     <div className="grid md:grid-cols-2 space-y-3">
                         <div>
-                            <h3 className="text-sm font-semibold text-center text-gray-700">
+                            <h3 className="text-sm font-semibold text-center text-gray-700 mb-2">
                                 Apprentice Information
                             </h3>
-                            <div className="grid grid-cols-2">
-                                <p>Name:</p>
-                                <p>{student.name}</p>
+
+                            <div className="grid grid-cols-2 space-y-2 text-sm">
+                                <div className="flex items-center gap-2">
+                                    <User className="text-red-900" size={16} />
+                                    <p> {student.name}</p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <BookOpen className="text-red-900" size={16} />
+                                    <p>{student.type}</p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Clock className="text-red-900" size={16} />
+                                    <p>{" "}
+                                        {student.duration}/₦{student.price?.toLocaleString()}
+                                    </p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Phone className="text-red-900" size={16} />
+                                    <p>{student.phone}</p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Mail className="text-red-900" size={16} />
+                                    <p> {student.email}</p>
+                                </div>
                             </div>
-                            <div className="grid grid-cols-2">
-                                <p>Training Package:</p>
-                                <p> {student.type}</p>
-                            </div>
-                            <div className="grid grid-cols-2">
-                                <p>Duration & Fee:</p>
-                                <p> {student.duration}/₦{student.price?.toLocaleString()}</p>
-                            </div>
-                            <div className="grid grid-cols-2">
-                                <p>Phone Number:</p>
-                                <p> {student.phone}</p>
-                            </div>
-                            <div className="grid grid-cols-2">
-                                <p>Email:</p>
-                                <p> {student.email}</p>
-                            </div>
+
                         </div>
 
                         <div>
@@ -121,7 +140,7 @@ export default function AdminStudentList() {
                         </div>
                     </div>
 
-               
+
                     <p className="text-center text-sm text-red-600"> {student.address}</p>
 
 
