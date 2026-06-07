@@ -61,8 +61,8 @@ export default function AdminStudentList() {
                 >
                     {/* NAME */}
                     <div className="flex justify-between">
-                        <h2 className="text-base font-semibold text-gray-800">
-                            {student.name}
+                        <h2 className="text-base font-semibold text-black">
+                            Trainee Application
                         </h2>
                         <span
                             className={`text-sm font-semibold  ${student.status === "accepted"
@@ -75,24 +75,58 @@ export default function AdminStudentList() {
                     </div>
 
                     {/* DETAILS */}
-                    <div className="grid grid-cols-2 text-sm bg-gray-50 p-2 rounded">
-                        <p>📞 {student.phone}</p>
-                        <p>🎓 {student.type}</p>
-                        <p>⏳ {student.duration}/₦{student.price?.toLocaleString()}</p>
-                        <p>📅 {student.date}</p>
+                    <div className="grid md:grid-cols-2 space-y-3">
+                        <div>
+                            <h3 className="text-sm font-semibold text-center text-gray-700">
+                                Apprentice Information
+                            </h3>
+                            <div className="grid grid-cols-2">
+                                <p>Name:</p>
+                                <p>{student.name}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Training Package:</p>
+                                <p> {student.type}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Duration & Fee:</p>
+                                <p> {student.duration}/₦{student.price?.toLocaleString()}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Phone Number:</p>
+                                <p> {student.phone}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Email:</p>
+                                <p> {student.email}</p>
+                            </div>
+                        </div>
 
-                        {/* EMERGENCY */}
-                        <p>🚨 {student.emergencyName} ( {student.emergencyAddress})</p>
+                        <div>
+                            <h3 className="text-sm font-semibold text-center text-gray-700">
+                                Emergency Contact Information
+                            </h3>
+                            <div className="grid grid-cols-2">
+                                <p>Name:</p>
+                                <p> {student.emergencyName}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Phone Number:</p>
+                                <p>  {student.emergencyPhone}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Email:</p>
+                                <p> {student.emergencyEmail}</p>
+                            </div>
+                        </div>
                     </div>
 
-
+               
                     <p className="text-center text-sm text-red-600"> {student.address}</p>
 
 
-
-
                     {/* ACTIONS */}
-                    <div className="flex gap-3 mt-3">
+                    <div className="flex justify-between gap-3 mt-3">
                         <button
                             onClick={() => handleAccept(student.id)}
                             className="bg-green-600 text-white px-4 py-1 rounded-lg"

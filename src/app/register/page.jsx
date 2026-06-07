@@ -15,10 +15,12 @@ export default function StudentForm() {
     type: "",
     name: "",
     phone: "",
+    email: "",
     address: "",
     date: "",
     emergencyName: "",
     emergencyPhone: "",
+    emergencyEmail: "",
     duration: "",
     studentSignature: "",
     guardianSignature: "",
@@ -32,27 +34,26 @@ export default function StudentForm() {
       { label: "4 Months", price: 150000 },
     ],
 
-    Lashes: [
-      { label: "2 Weeks ", price: 85000 },
-      { label: "1 Months", price: 120000 },
-      { label: "2 Months", price: 200000 },
-    ],
+    // Lashes: [
+    //   { label: "2 Weeks ", price: 85000 },
+    //   { label: "1 Months", price: 120000 },
+    //   { label: "2 Months", price: 200000 },
+    // ],
 
-    "Micro Blading": [
-      { label: "2 Weeks ", price: 100000 },
-      { label: "1 Months", price: 150000 },
-      { label: "2 Months", price: 250000 },
-    ],
+    // "Micro Blading": [
+    //   { label: "2 Weeks ", price: 100000 },
+    //   { label: "1 Months", price: 150000 },
+    //   { label: "2 Months", price: 250000 },
+    // ],
 
-    Makeover: [
-      { label: "1 Month", price: 100000 },
-      { label: "4 Months", price: 150000 },
-    ],
+    // Makeover: [
+    //   { label: "1 Month", price: 100000 },
+    //   { label: "4 Months", price: 150000 },
+    // ],
 
     Pedicure: [
-      { label: "1 Month", price: 40000 },
-      { label: "2 Months", price: 70000 },
-      { label: "4 Months", price: 100000 },
+      { label: "2 Weeks", price: 40000 },
+      { label: "1 Months", price: 60000 },
     ],
   };
 
@@ -103,10 +104,12 @@ export default function StudentForm() {
         type: "",
         name: "",
         phone: "",
+        email: "",
         address: "",
         date: "",
         emergencyName: "",
         emergencyPhone: "",
+        emergencyEmail: "",
         duration: "",
         studentSignature: "",
         guardianSignature: "",
@@ -160,11 +163,29 @@ export default function StudentForm() {
             />
           </div>
           <div className="grid gap-2">
-            <label htmlFor="" className="text-black font-normal ">Contact: </label>
+            <label className="text-black font-normal">
+              Phone Number:
+            </label>
             <input
+              type="tel"
               name="phone"
-              placeholder="Enter Phone Number/Email"
+              placeholder="Enter Phone Number"
               value={form.phone}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <label className="text-black font-normal">
+              Email Address:
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email Address"
+              value={form.email}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
@@ -204,11 +225,29 @@ export default function StudentForm() {
           </div>
 
           <div className="grid gap-2">
-            <label htmlFor="" className="text-black font-normal">Emergency Contact Phone No: </label>
+            <label className="text-black font-normal">
+              Emergency Contact Phone No:
+            </label>
             <input
+              type="tel"
               name="emergencyPhone"
-              placeholder="Enter Phone Number/Email"
+              placeholder="Enter Phone Number"
               value={form.emergencyPhone}
+              onChange={handleChange}
+              required
+              className="w-full border p-3 rounded-xl text-black mt-1"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <label className="text-black font-normal">
+              Emergency Contact Email:
+            </label>
+            <input
+              type="email"
+              name="emergencyEmail"
+              placeholder="Enter Email Address"
+              value={form.emergencyEmail}
               onChange={handleChange}
               required
               className="w-full border p-3 rounded-xl text-black mt-1"
@@ -226,9 +265,9 @@ export default function StudentForm() {
             >
               <option value="">Select Service</option>
               <option value="Nails">Nails</option>
-              <option value="Lashes">Lashes</option>
-              <option value="Micro Blading">Micro Blading</option>
-              <option value="Makeover">Makeover</option>
+              {/* <option value="Lashes">Lashes</option> */}
+              {/* <option value="Micro Blading">Micro Blading</option> */}
+              {/* <option value="Makeover">Makeover</option> */}
               <option value="Pedicure">Pedicure</option>
             </select>
           </div>
@@ -471,12 +510,12 @@ export default function StudentForm() {
               {/* MESSAGE */}
               <p className="text-gray-700 mt-3 leading-relaxed">
                 Your application has been successfully submitted. <br />
-                We appreciate your interest in <b>Paradise Training Program</b>.
+                We appreciate your interest in <b>Paradise WBL Training Program</b>.
               </p>
 
               <p className="text-gray-600 mt-3 text-sm">
-                We will contact you via the phone number you provided for
-                <b> payment details and confirmation of your enrollment.</b>
+                We will contact you via the email or phone number you provided for
+                <b> payment and confirmation of your enrollment.</b>
               </p>
 
               {/* HIGHLIGHT NOTE */}
