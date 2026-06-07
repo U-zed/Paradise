@@ -13,6 +13,7 @@ import {
     User,
     BookOpen,
     Clock,
+    MapPin,
     Phone,
     Mail,
     UserCheck,
@@ -63,18 +64,19 @@ export default function AdminStudentList() {
 
     return (
         <div className="grid gap-4">
+                                    <h2 className="text-base font-semibold text-black text-center uppercase py-5">
+                            Trainee Applications
+                        </h2>
             {students.map((student) => (
                 <div
                     key={student.id}
-                    className="bg-white p-4 rounded-xl shadow space-y-1 border text-black"
+                    className=" p-4 rounded-xl shadow space-y-1 border text-black bg-gray-200"
                 >
                     {/* NAME */}
-                    <div className="flex justify-between">
-                        <h2 className="text-base font-semibold text-black">
-                            Trainee Application
-                        </h2>
+                    <div className=" text-right">
+
                         <span
-                            className={`text-sm font-semibold  ${student.status === "accepted"
+                            className={`text-sm font-semibold text-right bg-white px-2 py-1 w-fit rounded-full ${student.status === "accepted"
                                 ? "text-green-600"
                                 : "text-yellow-600"
                                 }`}
@@ -84,78 +86,88 @@ export default function AdminStudentList() {
                     </div>
 
                     {/* DETAILS */}
-                    <div className="grid md:grid-cols-2 space-y-3">
-                        <div>
-                            <h3 className="text-sm font-semibold text-center text-gray-700 mb-2">
+                    <div className="grid md:grid-cols-2 gap-4 mt-3">
+
+                        {/* LEFT SIDE */}
+                        <div className="border rounded-xl px-4 py-2 space-y-3 bg-gray-50">
+
+                            <h3 className="text-sm font-bold text-gray-700 border-b pb-1 text-center text-red-900">
                                 Apprentice Information
                             </h3>
 
-                            <div className="grid grid-cols-2 space-y-2 text-sm">
-                                <div className="flex items-center gap-2">
-                                    <User className="text-red-900" size={16} />
-                                    <p> {student.name}</p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <BookOpen className="text-red-900" size={16} />
-                                    <p>{student.type}</p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <Clock className="text-red-900" size={16} />
-                                    <p>{" "}
-                                        {student.duration}/₦{student.price?.toLocaleString()}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <Phone className="text-red-900" size={16} />
-                                    <p>{student.phone}</p>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <Mail className="text-red-900" size={16} />
-                                    <p> {student.email}</p>
-                                </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <User className="text-red-900" size={16} />
+                                <p> {student.name}</p>
                             </div>
 
+                            <div className="flex items-center gap-2 text-sm">
+                                <BookOpen className="text-red-900" size={16} />
+                                <p> {student.type}</p>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <Clock className="text-red-900" size={16} />
+                                <p>
+                                    {" "}
+                                    {student.duration}/₦{student.price?.toLocaleString()}
+                                </p>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <Phone className="text-red-900" size={16} />
+                                <p>{student.phone}</p>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <Mail className="text-red-900" size={16} />
+                                <p> {student.email}</p>
+                            </div>
                         </div>
 
-                        <div>
-                            <h3 className="text-sm font-semibold text-center text-gray-700">
-                                Emergency Contact Information
+                        {/* RIGHT SIDE */}
+                        <div className="border rounded-xl p-4 space-y-3 bg-gray-50">
+
+                            <h3 className="text-sm font-bold text-gray-700 border-b pb-1 text-center text-red-900">
+                                Emergency Contact
                             </h3>
-                            <div className="grid grid-cols-2">
-                                <p>Name:</p>
-                                <p> {student.emergencyName}</p>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <UserCheck className="text-red-900" size={16} />
+                                <p>{student.emergencyName}</p>
                             </div>
-                            <div className="grid grid-cols-2">
-                                <p>Phone Number:</p>
-                                <p>  {student.emergencyPhone}</p>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <Smartphone className="text-red-900" size={16} />
+                                <p> {student.emergencyPhone}</p>
                             </div>
-                            <div className="grid grid-cols-2">
-                                <p>Email:</p>
-                                <p> {student.emergencyEmail}</p>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <Mail className="text-red-900" size={16} />
+                                <p>{student.emergencyEmail}</p>
                             </div>
                         </div>
                     </div>
 
 
-                    <p className="text-center text-sm text-red-600"> {student.address}</p>
-
+                    <div className="mt-4 pt-3 text-sm text-black flex justify-center items-center gap-2 text-sm">
+                        <MapPin className="text-red-900" size={16} />
+                        <p>
+                           {student.address}
+                        </p>
+                    </div>
 
                     {/* ACTIONS */}
                     <div className="flex justify-between gap-3 mt-3">
                         <button
                             onClick={() => handleAccept(student.id)}
-                            className="bg-green-600 text-white px-4 py-1 rounded-lg"
+                            className="bg-green-600 text-white px-4 py-1 rounded-lg text-sm"
                         >
                             Accept
                         </button>
 
                         <button
                             onClick={() => handleDelete(student.id)}
-                            className="bg-red-600 text-white px-4 py-1 rounded-lg"
+                            className="bg-red-600 text-white px-4 py-1 rounded-lg text-sm"
                         >
                             Delete
                         </button>
