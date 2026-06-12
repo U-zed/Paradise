@@ -29,9 +29,9 @@ export default function StudentForm() {
 
   const servicePackages = {
     Nails: [
-      { label: "1 Month", price: 60000 },
-      { label: "2 Months", price: 100000 },
-      { label: "4 Months", price: 150000 },
+      { label: "4 Weeks", price: 80000 },
+      { label: "8 Weeks", price: 150000 },
+      { label: "12 Weeks", price: 200000 },
     ],
 
     // Lashes: [
