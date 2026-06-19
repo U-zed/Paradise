@@ -30,9 +30,9 @@ export default function StudentForm() {
 
   const servicePackages = {
     Nails: [
-      { label: "1 Month", price: 60000 },
-      { label: "2 Months", price: 100000 },
-      { label: "4 Months", price: 150000 },
+      { label: "4 Weeks", price: 60000 },
+      { label: "8 Weeks", price: 110000 },
+      { label: "12 Weeks", price: 160000 },
     ],
 
     // Lashes: [
@@ -376,6 +376,7 @@ export default function StudentForm() {
                   <X size={22} className="text-red-700" />
                 </button>
               </div>
+
               {/* Scrollable Content */}
               <div className="max-h-[80vh] overflow-y-auto px-6 py-5">
                 <ol className="space-y-4 text-sm text-gray-800 list-decimal pl-5">
