@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { X } from "lucide-react";
+import Loader from "@/components/Loader";
 
 export default function StudentForm() {
   const [loading, setLoading] = useState(false);
@@ -115,16 +116,19 @@ export default function StudentForm() {
         guardianSignature: "",
         agree: false,
       });
+
     } catch (err) {
       console.error(err);
       alert("Failed to submit application");
-    }
 
-    setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-orange-50 px-4 pt-12">
+      {loading && <Loader />}
 
       <form
         onSubmit={handleSubmit}
@@ -378,10 +382,12 @@ export default function StudentForm() {
                   <li>All students must be punctual and attend training sessions regularly.</li>
 
                   <li>
-                    Training sessions are held three (3) times per week for all courses,
-                    except Nails and Pedicure training which are held four (4) times per week.
-                    Students and instructors may mutually agree on suitable training days and
-                    schedules, provided the required number of weekly sessions is maintained.
+                    Training sessions are held a minimum of three (3) times per week and a maximum of four (4) times per week, depending on the course.
+                    Students and instructors may mutually agree on suitable training days and schedules, provided the required number of weekly sessions is maintained.
+                  </li>
+
+                  <li>
+                    All students are required to have the “Beyond the Polish Guide” training book and the official studio uniform as part of their training materials and uniform.
                   </li>
                   <li>
                     Absence from class must be communicated to the instructor in advance

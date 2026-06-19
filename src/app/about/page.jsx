@@ -3,10 +3,17 @@
 import { motion } from "framer-motion";
 import { Sparkles, Heart, Star, ShieldCheck } from "lucide-react";
 import CEOCard from "@/components/CEOCard";
+import { useState } from "react";
+import Loader from "@/components/Loader";
+import Link from "next/link";
 
 export default function About() {
+    const [loading, setLoading] = useState(false);
+
   return (
     <main className="overflow-hidden">
+      {loading && <Loader />}
+
       {/* ABOUT PARADISE SECTION */}
       <section className="relative min-h-screen bg-gradient-to-b from-pink-100 to-white pt-12 py-8 px-6 md:px-16">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
@@ -40,25 +47,27 @@ export default function About() {
             </motion.h2>
 
            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-  Welcome to <span className="font-semibold text-orange-700">Paradise</span> —
+  Welcome to <span className="font-semibold text-orange-700">Paradise</span>,
   where beauty lives and confidence is created. We are a full luxury beauty studio dedicated to helping you look and feel your absolute best through a wide range of professional services.
 </p>
 
 <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-  At Paradise, we specialize in flawless nails, custom tattoos, microblading, wig installation, and lash enhancements — all delivered with precision, creativity, and care. Every service is designed to enhance your natural beauty and reflect your unique style.
+  At Paradise, we specialize in flawless nails, custom tattoos, microblading, wig installation, and lash enhancements, all delivered with precision, creativity, and care. Every service is designed to enhance your natural beauty and reflect your unique style.
 </p>
 
 <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-  Soon, we’ll also be expanding into luxury beauty accessories and jewelry, giving you everything you need to complete your glow-up in one place. At <span className="font-semibold text-orange-700">Paradise</span>, beauty is not just a service — it’s an experience.
+  Soon, we’ll also be expanding into luxury beauty accessories and jewelry, giving you everything you need to complete your glow-up in one place. At <span className="font-semibold text-orange-700">Paradise</span>, beauty is not just a service, it’s an experience.
 </p>
 
-            <motion.button
-              className="mt-6 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-800 transition-all shadow-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Explore Our Services
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.05 }}>
+  <Link
+    href="/products"
+    onClick={() => setLoading(true)}
+    className="mt-6 inline-block bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-800 transition-all shadow-lg"
+  >
+    Explore Our Services
+  </Link>
+</motion.div>
           </motion.div>
         </div>
 

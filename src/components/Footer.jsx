@@ -2,11 +2,27 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Loader from "./Loader";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+  setLoading(false);
+}, [pathname]);
+  
+  useEffect(() => {
+    return () => setLoading(false);
+  }, []);
+
   return (
     <footer className="relative bg-slate-900 text-white py-12 md:py-16 overflow-hidden">
+      {loading && <Loader />}
+
       {/* Glow effect */}
       <motion.div
         className="absolute inset-0 bg-pink-500/20 blur-3xl -z-10"
@@ -47,13 +63,13 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
 
           <ul className="space-y-2 text-sm text-pink-100">
-            <li><Link href="/" className="hover:text-white">Home</Link></li>
-            <li><Link href="/book" className="hover:text-white">Book Appointment</Link></li>
-            <li><Link href="/register" className="hover:text-white">Train With Us</Link></li>
-            <li><Link href="/about" className="hover:text-white">About Paradise</Link></li>
-            <li><Link href="/contact" className="hover:text-white">Contact Us</Link></li>
-            <li><Link href="/products" className="hover:text-white">Our Products</Link></li>
-            <li><Link href="/gallery" className="hover:text-white">Gallery</Link></li>
+            <li><Link href="/" onClick={() => setLoading(true)} className="hover:text-white">Home</Link></li>
+            <li><Link href="/book" onClick={() => setLoading(true)} className="hover:text-white">Book Appointment</Link></li>
+            <li><Link href="/register" onClick={() => setLoading(true)} className="hover:text-white">Train With Us</Link></li>
+            <li><Link href="/about" onClick={() => setLoading(true)} className="hover:text-white">About Paradise</Link></li>
+            <li><Link href="/contact" onClick={() => setLoading(true)} className="hover:text-white">Contact Us</Link></li>
+            <li><Link href="/products" onClick={() => setLoading(true)} className="hover:text-white">Our Products</Link></li>
+            <li><Link href="/gallery" onClick={() => setLoading(true)} className="hover:text-white">Gallery</Link></li>
           </ul>
         </motion.div>
 
@@ -67,7 +83,7 @@ export default function Footer() {
 
           <ul className="text-sm space-y-2 text-pink-100">
             <li>
-              📍 Beside Musa Diko House, Jaji Street, Kubwa Village Market, FCT
+              📍 No 34 Block 8, Akufor Street A Close, Maitama Sabo, Kubwa FCT Abuja, Abuja
             </li>
             <li>📞 +234 903 111 8322</li>
 

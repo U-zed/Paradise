@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
@@ -10,27 +12,35 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      await addDoc(collection(db, "messages"), {
-        ...form,
-        createdAt: serverTimestamp(),
-      });
-      alert("✅ Message sent successfully!");
-      setForm({ name: "", email: "", message: "" });
-    } catch (err) {
-      console.error(err);
-      alert("❌ Failed to send message.");
-    }
+  setLoading(true);
 
+  const loadingToast = toast.loading("Sending message...");
+
+  try {
+    await addDoc(collection(db, "messages"), {
+      ...form,
+      createdAt: serverTimestamp(),
+    });
+
+    toast.success("Message sent 💌", { id: loadingToast });
+
+    setForm({ name: "", email: "", message: "" });
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to send message ❌", { id: loadingToast });
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   return (
+<>
+      {loading && <Loader />}
     <main className="relative min-h-screen bg-red-50 items-center pt-10">
+
       <div>
         <motion.h2
           className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-blue-900 pb-3 pt-10"
@@ -43,7 +53,7 @@ export default function Contact() {
 
         <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg mb-8 px-5">
           We’d love to hear from you. Whether you’re booking a beauty service, asking a question,
-          or exploring our upcoming accessories and jewelry collection — the Paradise team is here for you.
+          or exploring our upcoming accessories and jewelry collection, the Paradise team is here for you.
         </p>
       </div>
 
@@ -92,7 +102,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-900 text-white py-3 text-sm sm:text-base md:text-base rounded-xl font-semibold hover:bg-blue-950 transition-all duration-300"
+                className="w-full bg-blue-900 text-white py-3 text-sm sm:text-base md:text-base rounded-xl font-semibold hover:bg-blue-950 transition-all duration-300 disabled:opacity-50"
               >
                 {loading ? "Sending..." : "Send Message"}
               </button>
@@ -106,7 +116,7 @@ export default function Contact() {
           <motion.div
             className="text-left my-10 grid md:grid-cols-2 text-gray-700 text-sm sm:text-base md:text-base"
           >
-            <p>📍 Beside Musa Diko House, Jaji Street, Kubwa Village Market, FCT</p>
+            <p>📍 No 34 Block 8, Akufor Street A Close, Maitama Sabo, Kubwa FCT Abuja, Abuja</p>
             <p>📞 +234 903 111 8322</p>
 
             <p>
@@ -137,31 +147,41 @@ export default function Contact() {
               Book your appointment today for nails, tattoos, microblading, wigs, lashes,
               and luxury beauty transformations or explore our upcoming beauty collections.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-              <Link
-                href="/book"
-                className="bg-white text-blue-900 font-semibold px-6 py-3 text-sm sm:text-base md:text-base rounded-full hover:bg-pink-100 transition"
-              >
-                Book Now
-              </Link>
-              <Link
-                href="/register"
-                className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
-  hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
-              >
-                 Training With Us
-              </Link>
-              <Link
-                href="/products"
-                className="border border-white text-white px-6 py-3 text-sm sm:text-base md:text-base rounded-full hover:bg-white hover:text-blue-900 transition"
-              >
-                Explore Products
-              </Link>
-            </div>
+
+           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+  
+  <Link
+    href="/book"
+    onClick={() => setLoading(true)}
+    className="bg-white text-blue-900 font-semibold px-6 py-3 text-sm sm:text-base md:text-base rounded-full hover:bg-pink-100 transition"
+  >
+    Book Now
+  </Link>
+
+  <Link
+    href="/register"
+    onClick={() => setLoading(true)}
+    className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
+    hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
+  >
+    Training With Us
+  </Link>
+
+  <Link
+    href="/products"
+    onClick={() => setLoading(true)}
+    className="border border-white text-white px-6 py-3 text-sm sm:text-base md:text-base rounded-full hover:bg-white hover:text-blue-900 transition"
+  >
+    Explore Products
+  </Link>
+
+</div>
+
           </motion.div>
         </div>
       </section>
 
     </main>
+    </>
   );
 }

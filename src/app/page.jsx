@@ -10,11 +10,18 @@ import Stats from "@/components/Stats";
 import Testimonials from "@/components/Testimonials";
 import About from "./about/page";
 import JustProducts from "@/components/JustProducts";
+import { useState } from "react";
+import Loader from "@/components/Loader";
+
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <main className="text-center pt-28 bg-orange-50 min-h-screen">
 
+    <>
+      {loading && <Loader />}
       {/* Hero Section */}
       <motion.section
         id="home"
@@ -28,7 +35,7 @@ export default function Home() {
         </h1>
         <p className="text-base font-bold p-3 font-mono text-red-700 mb-4">Where Beauty Lives!</p>
         <p className="mt-2 text-sm sm:text-base md:text-lg max-w-2xl mx-auto text-gray-800">
-          Step into Paradise — your luxury destination for flawless nail care and beauty.
+          Step into Paradise, your luxury destination for flawless nail care and beauty.
           From elegant manicures to premium nail essentials, we create looks that leave a lasting impression.
           Book your appointment today and let your beauty shine effortlessly.
         </p>
@@ -52,30 +59,37 @@ export default function Home() {
           </p>
         </motion.div> */}
 
-        <motion.div className="mt-8 px-7 flex flex-col sm:flex-row justify-center gap-4">
-          <Link
-            href="/products"
-            className="bg-blue-950 text-white px-6 py-3 rounded-full shadow-md
-             hover:bg-white hover:text-blue-950 border border-blue-950 transition-all text-sm sm:text-base md:text-base"
-          >
-            Products & Services
-          </Link>
-          <Link
-            href="/book"
-            className="border border-blue-950 text-blue-950 px-6 py-3 rounded-full hover:bg-blue-950 hover:text-white transition text-sm sm:text-base md:text-base"
-          >
-            Book Appointment
-          </Link>
-          <Link
-            href="/register"
-            className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
-  hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
-          >
-            Start Training
-          </Link>
-        </motion.div>
+
+      <motion.div className="mt-8 px-7 flex flex-col sm:flex-row justify-center gap-4">
+  <Link
+    href="/products"
+    onClick={() => setLoading(true)}
+    className="bg-blue-950 text-white px-6 py-3 rounded-full shadow-md
+    hover:bg-white hover:text-blue-950 border border-blue-950 transition-all text-sm sm:text-base md:text-base"
+  >
+    Products & Services
+  </Link>
+
+  <Link
+    href="/book"
+    onClick={() => setLoading(true)}
+    className="border border-blue-950 text-blue-950 px-6 py-3 rounded-full hover:bg-blue-950 hover:text-white transition text-sm sm:text-base md:text-base"
+  >
+    Book Appointment
+  </Link>
+
+  <Link
+    href="/register"
+    onClick={() => setLoading(true)}
+    className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
+    hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"
+  >
+    Start Training
+  </Link>
+</motion.div>
       </motion.section>
 
+         </>
       {/* Products */}
       <section id="services">
         <JustProducts />
