@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { db } from "@/firebase/config";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 
 export default function MessagesAdmin({ handleDelete }) {
+  const router = useRouter();
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -17,13 +20,26 @@ export default function MessagesAdmin({ handleDelete }) {
   }, []);
 
   return (
-    <div className="space-y-3">
-      <h1 className="text-center text-2xl font-bold pt-6 pb-2 text-blue-900">
-        Messages
+    <div className="space-y-3 pt-10">
+
+      <div className="flex justify-end pr-3 pt-10">
+        <button
+          type="button"
+          onClick={() => router.push("/admin")}
+          className="p-2 bg-white text-red-600 hover:text-white rounded-full hover:bg-red-700 border border-redtransition"
+        >
+          <ArrowLeft size={18} />
+        </button>
+      </div>
+
+      <h1 className="text-center text-3xl font-bold pt-6 pb-2 text-blue-900">
+        Customer Messages
       </h1>
-      <p className="text-sm font-semibold  text-center text-gray-700">
-        View and manage all client inquiries
+
+      <p className="text-sm text-center text-gray-800 max-w-2xl mx-auto pb-6">
+        Manage customer inquiries, feedback and complaints from one central location to ensure timely responses and excellent customer service.
       </p>
+
       {messages.length === 0 ? (
         <p className="text-center text-gray-700">No messages yet.</p>
       ) : (

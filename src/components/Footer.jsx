@@ -43,7 +43,7 @@ export default function Footer() {
               alt="Paradise Logo"
               width={70}
               height={70}
-              className="rounded-full mb-4 bg-white p-1 object-cover"
+              className="rounded-br-2xl rounded-tl-2xl  shadow-red-400 shadow-lg mb-4 bg-white p-1 object-cover"
               priority
             />
           </Link>

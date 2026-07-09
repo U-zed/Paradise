@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { db } from "@/firebase/config";
 import {
   collection,
@@ -15,6 +17,7 @@ import { Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function GalleryAdmin() {
+  const router = useRouter();
   const [category, setCategory] = useState("nails");
   const [title, setTitle] = useState("");
   const [filename, setFilename] = useState("");
@@ -85,10 +88,13 @@ export default function GalleryAdmin() {
   const visibleItems = showAll ? items : items.slice(0, 10);
 
   return (
-    <div className="space-y-6 pt-6 p-3">
-      <h1 className="text-2xl font-bold text-center text-blue-900">Gallery</h1>
-      <p className="text-sm font-semibold text-center text-gray-700">
-        Browse and manage all showcased works
+    <div className="space-y-6 pt-16 p-3">
+      <h1 className="text-3xl font-bold text-center text-blue-900 pt-6 pb-2">
+        Gallery Management
+      </h1>
+
+      <p className="text-sm text-center text-gray-800 max-w-2xl mx-auto pb-6">
+        Manage your portfolio by uploading, organizing and showcasing completed nail designs, pedicures and other salon work for clients to explore.
       </p>
 
       {/* ADD FORM */}
@@ -142,12 +148,26 @@ export default function GalleryAdmin() {
           </div>
         )}
 
-        <button
-          type="submit"
-          className="bg-blue-900 hover:bg-blue-950 text-white px-4 py-1 rounded"
-        >
-          {loading ? "Uploading..." : "Upload Image"}
-        </button>
+        <div className="flex justify-between">
+
+          <button
+            type="button"
+            onClick={() => router.push("/admin")}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
+          >
+            <ArrowLeft size={18} />
+            Go Back
+          </button>
+
+
+          <button
+            type="submit"
+            className="bg-blue-900 hover:bg-blue-950 text-white px-4 py-1 rounded"
+          >
+            {loading ? "Uploading..." : "Upload Image"}
+          </button>
+        </div>
+
       </form>
 
       {/* GALLERY LIST */}
@@ -200,6 +220,7 @@ export default function GalleryAdmin() {
           )}
         </div>
       </div>
+
     </div>
   );
 }

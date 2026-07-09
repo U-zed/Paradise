@@ -1,25 +1,77 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Book, User, MessageSquare, Package, ImageIcon } from "lucide-react";
+import {
+  LogOut,
+  Book,
+  User,
+  MessageSquare,
+  Package,
+  ImageIcon,
+  CirclePlus,
+  ReceiptText,
+  ClipboardList,
+  ClipboardPlus,
+} from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 
-// Components
-import BookingsAdmin from "@/components/BookingsAdmin";
-import AdminStudentList from "@/components/AdminStudentList";
-import MessagesAdmin from "@/components/MessagesAdmin";
-import ProductsAdmin from "@/components/ProductsAdmin";
-import GalleryAdmin from "@/components/GalleryAdmin";
+
+const menus = [
+  {
+    title: "Appointment Bookings",
+    subtitle: "Manage all customer appointment requests for Paradise. View upcoming bookings, confirm or reschedule appointments, assign staff and keep your daily schedule organized.",
+    icon: Book,
+    href: "/admin/bookings",
+    color: "bg-blue-800",
+    border: "border-blue-800",
+  },
+  {
+    title: "Student Applications",
+    subtitle: "Review applications from aspiring nail technicians who want to train at Paradise. Approve qualified applicants, monitor application progress and manage student enrollments.",
+    icon: User,
+    href: "/admin/students",
+    color: "bg-green-700",
+    border: "border-green-700",
+  },
+  {
+    title: "Customer Messages",
+    subtitle: "Stay connected with your clients by managing enquiries, complaints, feedback and general messages received through the Paradise website in one organized inbox.",
+    icon: MessageSquare,
+    href: "/admin/messages",
+    color: "bg-pink-700",
+    border: "border-pink-700",
+  },
+  {
+    title: "Product Management",
+    subtitle: "Manage Paradise's beauty products and accessories by adding new items, updating stock information, organizing categories and maintaining accurate inventory records.",
+    icon: Package,
+    href: "/admin/products",
+    color: "bg-purple-700",
+    border: "border-purple-700",
+  },
+  {
+    title: "Gallery Management",
+    subtitle: "Showcase Paradise's finest work by uploading, organizing and updating photos of completed nail designs, pedicure services, student projects and salon transformations.",
+    icon: ImageIcon,
+    href: "/admin/gallery",
+    color: "bg-orange-700",
+    border: "border-orange-700",
+  },
+];
 
 export default function AdminPage() {
-  // --- Login State ---
-  const [username, setUsername] = useState("");
+  const router = useRouter();
+
+  const [username, setUsername] = useState("");   // --- Login State ---
   const [password, setPassword] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [error, setError] = useState("");
 
-  // --- Active Section ---
-  const [activeSection, setActiveSection] = useState("bookings");
+  const [loading, setLoading] = useState(false);
 
   // --- Handle Login via API ---
   const handlePasswordSubmit = async (e) => {
@@ -34,6 +86,7 @@ export default function AdminPage() {
       const data = await res.json();
 
       if (data.success) {
+        sessionStorage.setItem("adminLoggedIn", "true");
         setIsAuthorized(true);
         setError("");
       } else {
@@ -44,6 +97,14 @@ export default function AdminPage() {
       setError("❌ Login failed. Try again.");
     }
   };
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("adminLoggedIn");
+
+    if (loggedIn === "true") {
+      setIsAuthorized(true);
+    }
+  }, []);
 
   // --- Generic Delete Handler (pass to child components) ---
   const handleDelete = async (collectionName, id) => {
@@ -58,8 +119,16 @@ export default function AdminPage() {
     }
   };
 
+
+  const navigate = (href) => {
+    setLoading(true);
+    router.push(href);
+  };
+
+
   // --- Login Screen ---
   if (!isAuthorized) {
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-blue-50">
         <form
@@ -110,64 +179,130 @@ export default function AdminPage() {
     exit: { y: -50, opacity: 0, transition: { duration: 0.3 } },
   };
 
+
+  if (loading) {
+    return <Loader />;
+  }
   // --- Admin Page UI ---
   return (
-    <main className="flex min-h-screen bg-blue-50 pt-18">
-      {/* Sidebar */}
-      <aside className="sticky top-0 left-0 z-10 min-h-screen w-16 md:w-56 bg-blue-900 text-white flex flex-col pt-10 p-2 md:p-4 ">
-        <div className="space-y-2 md:space-y-4">
-          {[
-            { key: "bookings", icon: <Book size={20} />, name: "Bookings" },
-            { key: "students", icon: <User size={20} />, name: "Students" },
-            { key: "messages", icon: <MessageSquare size={20} />, name: "Messages" },
-            { key: "products", icon: <Package size={20} />, name: "Products" },
-            { key: "gallery", icon: <ImageIcon size={20} />, name: "Gallery" },
-          ].map((sec) => (
-            <button
-              key={sec.key}
-              className={`flex items-center gap-2 md:gap-4 py-3 px-2 md:px-4 rounded hover:text-orange-500 transition ${
-                activeSection === sec.key ? "text-orange-600" : ""
-              }`}
-              onClick={() => setActiveSection(sec.key)}
-              title={sec.name}
-            >
-              <span className="md:hidden">{sec.icon}</span>
-              <span className="hidden md:inline">{sec.name}</span>
-            </button>
-          ))}
+    <main className="min-h-screen bg-blue-50 pt-15 px-4 pb-10">
+      {/* Content */}
+      <div className="mt-10 mb-10 bg-white">
+
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+
+          <div className="flex justify-center items-center my-5">
+
+            <Image
+              src="/images/paradise.jpg"
+              alt="Paradise Logo"
+              width={100}
+              height={100}
+              className="rounded-br-2xl rounded-tl-2xl  shadow-red-600 shadow-md object-cover"
+            />
+          </div>
+
+          <div className="text-left lg:text-right">
+
+            <h2 className="text-2xl font-extrabold  text-center text-blue-950">
+              Paradise WBL Management Dashboard
+            </h2>
+
+            <p className="text-gray-800 p-2 text-center">
+              Your central workspace for managing every aspect of Paradise WBL. Oversee operations, monitor business performance, and manage customers, services, products, inventory, bookings, training, staff, finances and more. <br /> All from one place.
+            </p>
+
+            <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-3 px-3 ">
+
+              <button
+                onClick={() => navigate("/services")}
+                className="w-full flex items-center justify-center gap-2 p-3 bg-white text-black  border border-gray-800 rounded-full hover:bg-gray-300 cursor-pointer transition"
+              >
+                <ClipboardList size={18} />
+                Service History
+              </button>
+
+              <button
+                onClick={() => navigate("/services/add")}
+                className="w-full flex items-center justify-center gap-2 p-3 bg-gray-600 text-white border border-gray-600 rounded-full hover:bg-gray-700 cursor-pointer transition"
+              >
+                <ClipboardPlus size={18} />
+                Record Service
+              </button>
+              <button
+                onClick={() => navigate("/expenses")}
+                className="w-full flex items-center justify-center gap-2 p-3 bg-blue-800 text-white border border-blue-800 rounded-full hover:bg-blue-900  cursor-pointer transition"
+              >
+                <ReceiptText size={18} />
+                Expense History
+              </button>
+
+              <button
+                onClick={() => navigate("/expenses/add")}
+                className="w-full flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded-full hover:bg-red-700  cursor-pointer transition"
+              >
+                <CirclePlus size={18} />
+                Record Expense
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Logout Button */}
+      </div>
+
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        {menus.map((menu) => {
+          const Icon = menu.icon;
+
+          return (
+            <button
+              key={menu.title}
+              onClick={() => navigate(menu.href)}
+              className="group text-left w-full"
+            >
+              <div className={`flex flex-col items-center bg-white rounded-2xl border ${menu.border}  shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 text-center`}>
+
+                <div
+                  className={`w-16 h-16 ${menu.color}  flex items-center rounded-br-3xl rounded-tl-3xl border justify-center text-white mb-5`}
+                >
+                  <Icon size={32} />
+                </div>
+
+                <h2 className="text-xl font-semibold text-black">
+                  {menu.title}
+                </h2>
+
+                <p className="mt-2 text-gray-700 text-sm">
+                  {menu.subtitle}
+                </p>
+                
+              </div>
+            </button>
+          );
+        })}
+
+      </div>
+
+      {/* Logout Button */}
+      <div className="flex text-center justify-end w-full  mt-30 md:mt-10 ">
         <button
-          className="flex text-center items-center gap-2 md:gap-4 p-2 md:px-4 rounded hover:text-red-800 transition text-red-600 mt-36 md:mt-0 bg-white"
+          className="flex text-center items-end justify-end gap-2 md:gap-4 p-2 md:px-4 rounded-xl border bg-white hover:bg-red-800 border-red-800 text-red-800 hover:text-white transition "
           onClick={() => {
+            sessionStorage.removeItem("adminLoggedIn");
             setIsAuthorized(false);
-            setPassword("");
             setUsername("");
+            setPassword("");
           }}
         >
           <LogOut size={20} className="md:hidden mx-auto " />
           <span className="hidden md:inline">Logout</span>
         </button>
-      </aside>
-
-      {/* Content */}
-      <div className="flex-1 p-3 relative overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSection}
-            variants={slideVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            {activeSection === "bookings" && <BookingsAdmin handleDelete={handleDelete} />}
-{activeSection === "students" && <AdminStudentList handleDelete={handleDelete} />}            {activeSection === "messages" && <MessagesAdmin handleDelete={handleDelete} />}
-            {activeSection === "products" && <ProductsAdmin handleDelete={handleDelete} />}
-            {activeSection === "gallery" && <GalleryAdmin />}
-          </motion.div>
-        </AnimatePresence>
       </div>
+
     </main>
   );
 }

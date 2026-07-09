@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import {
     collection,
     onSnapshot,
@@ -21,17 +23,18 @@ import {
 } from "lucide-react";
 
 export default function AdminStudentList() {
+    const router = useRouter();
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 2;
+    const itemsPerPage = 2;
 
-const indexOfLastItem = currentPage * itemsPerPage;
-const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-const currentStudents = students.slice(indexOfFirstItem, indexOfLastItem);
+    const currentStudents = students.slice(indexOfFirstItem, indexOfLastItem);
 
-const totalPages = Math.ceil(students.length / itemsPerPage);
+    const totalPages = Math.ceil(students.length / itemsPerPage);
 
     // 🔄 Real-time fetch
     useEffect(() => {
@@ -72,11 +75,27 @@ const totalPages = Math.ceil(students.length / itemsPerPage);
     }
 
     return (
-        <div className="grid gap-4">
-                                    <h2 className="text-base font-semibold text-black text-center uppercase py-5">
-                            Trainee Applications
-                        </h2>
-{currentStudents.map((student) => (                <div
+        <div className="grid gap-4 pt-15">
+
+            <div className="flex justify-end  mb-5 pt-10">
+                <button
+                    type="button"
+                    onClick={() => router.push("/admin")}
+                    className="p-2 bg-white text-red-600 hover:text-white rounded-full hover:bg-red-700 border border-redtransition"
+                >
+                    <ArrowLeft size={18} />
+                </button>
+            </div>
+
+
+            <h2 className="text-3xl font-bold text-blue-900 text-center pt-6 pb-2">
+                Trainee Applications
+            </h2>
+            <p className="text-sm text-gray-800 text-center max-w-2xl mx-auto pb-6">
+                Manage incoming training applications, review applicant information, and approve eligible students for enrollment into the Paradise WBL training program.
+            </p>
+            {currentStudents.map((student) => (
+                <div
                     key={student.id}
                     className=" p-4 rounded-xl shadow space-y-1 border text-black bg-gray-200"
                 >
@@ -160,7 +179,7 @@ const totalPages = Math.ceil(students.length / itemsPerPage);
                     <div className="mt-4 pt-3 text-sm text-black flex justify-center items-center gap-2 text-sm">
                         <MapPin className="text-red-900" size={16} />
                         <p>
-                           {student.address}
+                            {student.address}
                         </p>
                     </div>
 
@@ -185,29 +204,30 @@ const totalPages = Math.ceil(students.length / itemsPerPage);
 
             <div className="flex justify-center items-center gap-4 mt-6 mb-4">
 
-    <button
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        disabled={currentPage === 1}
-        className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
-    >
-        Prev
-    </button>
+                <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
+                >
+                    Prev
+                </button>
 
-    <span className="text-sm font-semibold text-blue-600">
-        Page {currentPage} of {totalPages}
-    </span>
+                <span className="text-sm font-semibold text-blue-600">
+                    Page {currentPage} of {totalPages}
+                </span>
 
-    <button
-        onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-        }
-        disabled={currentPage === totalPages}
-        className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
-    >
-        Next
-    </button>
+                <button
+                    onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 bg-blue-900 rounded-lg disabled:opacity-50 text-sm text-white"
+                >
+                    Next
+                </button>
 
-</div>
+            </div>
+
         </div>
     );
 }

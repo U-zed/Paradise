@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { db } from "@/firebase/config";
 import { collection, onSnapshot, addDoc, updateDoc, doc, serverTimestamp } from "firebase/firestore";
 import { Trash2, Edit2 } from "lucide-react";
 import Image from "next/image";
 
 export default function ProductsAdmin({ handleDelete }) {
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newProduct, setNewProduct] = useState({
@@ -96,17 +99,20 @@ export default function ProductsAdmin({ handleDelete }) {
   const visibleProducts = showAll ? products : products.slice(0, 10);
 
   return (
-    <div className="space-y-6 p-6">
-      <h1 className="text-2xl font-bold text-center text-blue-900"> Products</h1>
-<p className="text-sm font-semibold  text-center text-gray-700 pb-1">
-    Manage and showcase all available products
-  </p>
+    <div className="space-y-6 p-6 pt-15">
+      <h1 className="text-3xl font-bold text-center text-blue-900 pt-6 pb-2">
+        Products Management
+      </h1>
+
+      <p className="text-sm text-center text-gray-800 max-w-2xl mx-auto pb-6">
+        View, manage and showcase all beauty products available for sale, while keeping inventory details up to date.
+      </p>
       {/* Add Product Form */}
       <form
         onSubmit={handleAddProduct}
         className=" md:w-2/3 md:mx-auto bg-white p-6 rounded-xl shadow-lg"
       >
-        <h2 className="font-semibold text-md text-center text-orange-700">Add New Product </h2>
+        <h2 className="font-semibold text-md text-center text-orange-700 p-2">Add New Product </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 pt-2">
 
@@ -157,12 +163,25 @@ export default function ProductsAdmin({ handleDelete }) {
             <option value="hair-skin-products">Hair & Skin</option>
             <option value="nailsandlashes-products">Nails & Lashes</option>
           </select>
-          <button
-            type="submit"
-            className="col-span-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-950 transition-all font-semibold"
-          >
-            {loading ? "Adding..." : "Add Product"}
-          </button>
+
+          <div className="flex justify-between my-3">
+
+            <button
+              type="button"
+              onClick={() => router.push("/admin")}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
+            >
+              <ArrowLeft size={18} />
+              Go Back
+            </button>
+
+            <button
+              type="submit"
+              className="bg-blue-900 hover:bg-blue-950 text-white px-4 py-1 rounded "
+            >
+              {loading ? "Adding..." : "Add Product"}
+            </button>
+          </div>
         </div>
       </form>
 
