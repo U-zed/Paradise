@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import {
     addDoc,
     collection,
@@ -13,45 +13,24 @@ import {
     query,
     serverTimestamp,
 } from "firebase/firestore";
-import { Trash2 } from "lucide-react";
+import { Trash2, CirclePlus } from "lucide-react";
 import { db } from "@/firebase/config";
 
 export default function Expenses() {
-
-    const router = useRouter();
-
+    const router = useRouter(); const [showReceipt, setShowReceipt] = useState(false);
+    const [selectedExpense, setSelectedExpense] = useState(null);
     const today = new Date().toISOString().split("T")[0];
-
-    const categories = [
-        "Food",
-        "Transportation",
-        "Security",
-        "Electricity",
-        "Water",
-        "Internet",
-        "Equipment",
-        "Miscellaneous",
-        "Rent",
-        "Inventory Purchase",
-        "Salon Supplies",
-        "Staff Salary",
-    ];
+    const [loading, setLoading] = useState(false);
+    const [expenses, setExpenses] = useState([]);
+    const [search, setSearch] = useState("");
+    const [deleteId, setDeleteId] = useState(null);
+    const [showDelete, setShowDelete] = useState(false);
 
     const paymentMethods = [
         "Cash",
         "Transfer",
         "POS",
     ];
-
-    const [loading, setLoading] = useState(false);
-
-    const [expenses, setExpenses] = useState([]);
-
-    const [search, setSearch] = useState("");
-
-    const [deleteId, setDeleteId] = useState(null);
-
-    const [showDelete, setShowDelete] = useState(false);
 
     const [form, setForm] = useState({
         expenseTitle: "",
@@ -122,7 +101,6 @@ export default function Expenses() {
             alert("Expense added successfully.");
 
             setForm({
-
                 expenseTitle: "",
                 category: "",
                 amount: "",
@@ -131,7 +109,6 @@ export default function Expenses() {
                 staff: "",
                 notes: "",
                 date: today,
-
             });
 
             fetchExpenses();
@@ -189,6 +166,26 @@ export default function Expenses() {
                     </p>
                 </div>
 
+                <div className="flex justify-end gap-5 max-w-5xl  my-8 ">
+                    <button
+                        type="button"
+                        onClick={() => router.push("/admin")}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                    >
+                        <ArrowLeft size={18} />
+                        Back
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => router.push("/expenses/add")}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition"
+                    >
+                        <CirclePlus size={18} />
+                        Add Expense
+                    </button>
+                </div>
+
                 <div className="text-black bg-white rounded shadow-lg mt-8 p-6">
 
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
@@ -215,7 +212,7 @@ export default function Expenses() {
 
                                 <tr>
 
-                                    <th className="text-sm text-left p-4">ID</th>
+                                    {/* <th className="text-sm text-left p-4">ID</th> */}
 
                                     {/* <th className="text-left p-4">Title</th> */}
 
@@ -256,19 +253,24 @@ export default function Expenses() {
 
                                     <tr
                                         key={expense.id}
-                                        className="border-b hover:bg-gray-50"
+                                        onClick={() => {
+                                            setSelectedExpense(expense);
+                                            setShowReceipt(true);
+                                        }}
+                                        className="border-b hover:bg-gray-50 cursor-pointer transition"
+
                                     >
 
-                                        <td className="p-4  text-sm font-semibold">
+                                        {/* <td className="p-4  text-sm font-semibold">
                                             {expense.expenseId}
-                                        </td>
+                                        </td> */}
 
                                         {/* <td className="p-4">
                                             {expense.expenseTitle}
                                         </td> */}
 
                                         <td className="p-4 text-sm font-semibold">
-                                            {expense.category}
+                                            {expense.expenseTitle}
                                         </td>
 
                                         <td className="p-4 text-sm font-semibold text-red-600">
@@ -290,10 +292,12 @@ export default function Expenses() {
                                         <td className="p-4 text-center">
 
                                             <button
-                                                onClick={() => {
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
                                                     setDeleteId(expense.id);
                                                     setShowDelete(true);
                                                 }}
+
                                                 className="bg-red-100 hover:bg-red-200 text-red-600 p-2 rounded-lg cursor-pointer"
                                             >
                                                 <Trash2 size={15} />
@@ -312,18 +316,153 @@ export default function Expenses() {
                     </div>
 
                 </div>
-
-               <div className="mt-5">
-  <button
-    onClick={() => router.push("/admin")}
-    className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-  >
-    <ArrowLeft size={18} />
-    Go Back
-  </button>
-</div>
             </div>
 
+            {/* RECEIPT MODAL  */}
+            {showReceipt && selectedExpense && (
+                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden ">
+
+                        {/* Buttons */}
+                        <div className="flex justify-end pr-2 pt-2">
+
+                            <button
+                                onClick={() => setShowReceipt(false)}
+                                className="text-red-800 p-2 border border-red-800 rounded-full hover:bg-red-800 hover:text-white transition-all"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            {/* <button
+                                    onClick={() => window.print()}
+                                    className="px-6 py-3 bg-blue-900 text-white rounded-xl hover:bg-blue-950"
+                                >
+                                    Print Receipt
+                                </button> */}
+                        </div>
+
+
+                        <div className="p-8">
+
+                            <div className="text-center border-b pb-3">
+
+                                    <h3 className="text-center text-lg font-semibold text-blue-900">
+                                        Expense Details
+                                    </h3>
+
+                                    <p className="text-sm text-gray-800">
+                                        Business Expense Record
+                                    </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-5 mt-3">
+
+                                <div className=" grid grid-cols-2 gap-1 ">
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Description
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                                            {selectedExpense.expenseTitle}
+                                        </p>
+
+                                    </div>
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Date
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                                            {selectedExpense.date}
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div className=" grid grid-cols-2 gap-1 ">
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Expense ID
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                                            {selectedExpense.expenseId}
+                                        </p>
+                                    </div>
+
+                                    <div className="bg-gray-50 rounded-xl ">
+
+                                          {selectedExpense.notes && (
+
+                                <div className="bg-gray-50 rounded-xl p-2">
+
+                                    <p className="text-xs text-gray-500 uppercase">
+                                        Notes
+                                    </p>
+
+                                    <p className="text-sm font-semibold text-gray-900 mt-1">
+                                        {selectedExpense.notes}
+                                    </p>
+
+
+                                </div>
+
+                            )}
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                          
+
+
+                            <div className="mt-2 bg-red-50 border border-red-200 rounded-2xl p-4 text-center">
+
+                                <p className="uppercase text-red-600 text-sm tracking-widest">
+                                    Total Expense
+                                </p>
+
+                                <h1 className="text-4xl font-bold text-red-600 mt-2">
+                                    ₦{Number(selectedExpense.amount).toLocaleString()}
+                                </h1>
+
+                            </div>
+
+
+                            {/* <div className="flex justify-end gap-4 mt-2">
+
+                                <button
+                                    onClick={() => setShowReceipt(false)}
+                                    className="px-6 py-3 border rounded-xl hover:bg-gray-100"
+                                >
+                                    Close
+                                </button>
+
+                                <button
+                                    onClick={() => window.print()}
+                                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl"
+                                >
+                                    Print Receipt
+                                </button>
+
+                            </div> */}
+
+                        </div>
+
+                    </div>
+
+                </div>
+            )}
+
+
+            {/* DELETE MODAL  */}
             {showDelete && (
 
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">

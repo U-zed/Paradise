@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ClipboardList } from "lucide-react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
@@ -75,16 +75,8 @@ export default function AddService() {
 
     return (
         <div className="min-h-screen bg-gray-100 py-10 px-4 text-black pt-12">
-            <div className="max-w-5xl mx-auto mb-5 pt-10">
-                <button
-                    type="button"
-                    onClick={() => router.push("/admin")}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                >
-                    <ArrowLeft size={18} />
-                    Go Back
-                </button>
-            </div>
+         
+
             <h1 className="text-3xl font-bold text-blue-900 pt-10">
                 Record Service
             </h1>
@@ -92,26 +84,35 @@ export default function AddService() {
             <p className="text-gray-600 pb-8 py-3 max-w-2xl mx-auto">
                 Record a completed salon service by entering the customer, service, payment and transaction details for accurate business records.
             </p>
+               <div className="flex justify-end gap-5 max-w-5xl  my-10">
+                <button
+                    type="button"
+                    onClick={() => router.push("/admin")}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                >
+                    <ArrowLeft size={18} />
+                     Back
+                </button>
+                <button
+                    type="button"
+                    onClick={() => router.push("/services")}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition"
+                >
+                    <ClipboardList size={18} />
+                    View Services
+                </button>
+            </div>
 
             <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-xl px-8 pb-8 pt-4">
-
-                <div className="w-full flex justify-end items-end mb-5">
-                    <button
-                        type="button"
-                        onClick={() => router.push("/admin")}
-                        className="inline-flex items-end p-2 bg-transparent text-red-600 hover:text-white border text-right hover:bg-red-700 rounded-full transition"
-                    >
-                        <ArrowLeft size={18} />
-                        
-                    </button>
-                </div>
                 
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center justify-end mb-8">
 
-                    <div>
+                <div >
+
+                    <div className="flex gap-1 justify-end">
 
                         <p className="text-sm text-gray-500">
-                            Date
+                            Date: 
                         </p>
 
                         <p className="text-sm font-semibold text-black ">
@@ -119,10 +120,10 @@ export default function AddService() {
                         </p>
                     </div>
 
-                    <div className="text-right">
+                    <div className="flex gap-1 justify-end">
 
                         <p className="text-sm text-gray-500">
-                            Service ID
+                            Service ID:
                         </p>
 
                         <p className="text-sm font-semibold text-red-600">
@@ -131,6 +132,7 @@ export default function AddService() {
 
                     </div>
 
+                </div>
                 </div>
 
                 <form
@@ -201,8 +203,9 @@ export default function AddService() {
                             className="w-full mt-2 rounded-lg border border-gray-300 p-3 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none"
                         >
                             <option value="">Select Payment Method</option>
-                            <option>Cash</option>
+                            <option>Card</option>
                             <option>Transfer</option>
+                            <option>Cash</option>
                             <option>POS</option>
                         </select>
                     </div>
@@ -244,13 +247,10 @@ export default function AddService() {
                             onClick={() =>
                                 setForm({
                                     customer: "",
-
                                     service: "",
                                     staff: "",
                                     amount: "",
-
                                     paymentMethod: "",
-
                                     notes: "",
                                     date: today,
                                 })
@@ -263,7 +263,7 @@ export default function AddService() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="bg-blue-900 hover:bg-blue-950 disabled:bg-blue-300 text-white px-8 py-3 rounded-lg font-semibold transition"
+                            className="bg-green-900 hover:bg-green-950 disabled:bg-green-300 text-white px-8 py-3 rounded-lg font-semibold transition"
                         >
                             {loading ? "Saving..." : "Save Service"}
                         </button>
@@ -272,7 +272,9 @@ export default function AddService() {
 
                 </form>
 
+
             </div>
+
         </div>
     );
 }

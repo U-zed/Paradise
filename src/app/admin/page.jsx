@@ -187,39 +187,47 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-blue-50 pt-15 px-4 pb-10">
       {/* Content */}
-      <div className="mt-10 mb-10 bg-white">
+      <div className="py-10  ">
 
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div className="flex flex-col items-center  gap-8">
 
-          <div className="flex justify-center items-center my-5">
+          <div className="flex justify-center items-center my-5 ">
 
             <Image
               src="/images/paradise.jpg"
               alt="Paradise Logo"
               width={100}
               height={100}
-              className="rounded-br-2xl rounded-tl-2xl  shadow-red-600 shadow-md object-cover"
+              className="rounded-bl-3xl rounded-tr-3xl bg-white shadow-black shadow-md object-cover"
             />
           </div>
 
-          <div className="text-left lg:text-right">
+          <div>
 
             <h2 className="text-2xl font-extrabold  text-center text-blue-950">
               Paradise WBL Management Dashboard
             </h2>
 
             <p className="text-gray-800 p-2 text-center">
-              Your central workspace for managing every aspect of Paradise WBL. Oversee operations, monitor business performance, and manage customers, services, products, inventory, bookings, training, staff, finances and more. <br /> All from one place.
+              Your central workspace for managing every aspect of Paradise WBL. Oversee operations, monitor business performance and manage customers, services, products, inventory, bookings, training, staff, finances and more. <br /> All from one place.
             </p>
 
-            <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-3 px-3 ">
+            <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-3">
 
               <button
                 onClick={() => navigate("/services")}
                 className="w-full flex items-center justify-center gap-2 p-3 bg-white text-black  border border-gray-800 rounded-full hover:bg-gray-300 cursor-pointer transition"
               >
                 <ClipboardList size={18} />
-                Service History
+                View Service
+              </button>
+
+              <button
+                onClick={() => navigate("/expenses")}
+                className="w-full flex items-center justify-center gap-2 p-3 bg-white text-black  border border-gray-800 rounded-full hover:bg-gray-300  cursor-pointer transition"
+              >
+                <ReceiptText size={18} />
+                View Expense
               </button>
 
               <button
@@ -227,22 +235,16 @@ export default function AdminPage() {
                 className="w-full flex items-center justify-center gap-2 p-3 bg-gray-600 text-white border border-gray-600 rounded-full hover:bg-gray-700 cursor-pointer transition"
               >
                 <ClipboardPlus size={18} />
-                Record Service
+                Add Service
               </button>
-              <button
-                onClick={() => navigate("/expenses")}
-                className="w-full flex items-center justify-center gap-2 p-3 bg-blue-800 text-white border border-blue-800 rounded-full hover:bg-blue-900  cursor-pointer transition"
-              >
-                <ReceiptText size={18} />
-                Expense History
-              </button>
+
 
               <button
                 onClick={() => navigate("/expenses/add")}
                 className="w-full flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded-full hover:bg-red-700  cursor-pointer transition"
               >
                 <CirclePlus size={18} />
-                Record Expense
+                Add Expense
               </button>
             </div>
 
@@ -279,7 +281,7 @@ export default function AdminPage() {
                 <p className="mt-2 text-gray-700 text-sm">
                   {menu.subtitle}
                 </p>
-                
+
               </div>
             </button>
           );

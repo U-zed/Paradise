@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ReceiptText } from "lucide-react";
 
 export default function AddExpense() {
     const router = useRouter();
@@ -154,6 +154,26 @@ export default function AddExpense() {
                     </div>
                 </div>
 
+                <div className="flex justify-end gap-5 max-w-5xl  my-8 ">
+                    <button
+                        type="button"
+                        onClick={() => router.push("/admin")}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                    >
+                        <ArrowLeft size={18} />
+                        Back
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => router.push("/expenses")}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition"
+                    >
+                        <ReceiptText size={18} />
+                        View Expense
+                    </button>
+                </div>
+
                 <div className="bg-white rounded-xl shadow-lg p-8 text-black">
 
                     <h2 className="text-xl font-bold mb-2 text-center">
@@ -169,27 +189,30 @@ export default function AddExpense() {
                         className="grid md:grid-cols-2 gap-6"
                     >
 
-                        <div className="flex justify-between">
-                            <div>
-
-                                <p className="text-sm font-medium text-gray-600">
-                                    Date
-                                </p>
-
-                                <p className="text-sm font-semibold text-black">
-                                    {today}
-                                </p>
-
-                            </div>
+                        <div className="flex items-center justify-end mb-8">
 
                             <div>
-                                <p className="text-sm font-medium text-gray-600">
-                                    Expense ID
-                                </p>
+                                <div className="flex gap-1 justify-end">
 
-                                <p className="text-sm font-semibold text-red-600">
-                                    {expenseId}
-                                </p>
+                                    <p className="text-sm font-medium text-gray-600">
+                                        Date:
+                                    </p>
+
+                                    <p className="text-sm font-semibold text-black">
+                                        {today}
+                                    </p>
+
+                                </div>
+
+                                <div className="flex gap-1 justify-end">
+                                    <p className="text-sm font-medium text-gray-600">
+                                        Expense ID:
+                                    </p>
+
+                                    <p className="text-sm font-semibold text-red-600">
+                                        {expenseId}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -244,16 +267,7 @@ export default function AddExpense() {
                             />
                         </div>
 
-                        <div className="md:col-span-2 flex justify-between gap-3">
-
-                            <button
-                                type="button"
-    onClick={() => router.push("/admin")}
-                                className="flex items-center gap-2 border border-gray-300 bg-white text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-200 transition"
-                            >
-                                <ArrowLeft size={18} />
-                                Back
-                            </button>
+                        <div className="md:col-span-2 flex justify-end gap-3">
 
                             <button
                                 type="submit"

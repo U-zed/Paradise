@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import {
     collection,
     deleteDoc,
@@ -13,17 +13,19 @@ import {
     query,
 } from "firebase/firestore";
 import { db } from "@/firebase/config";
-import { Trash2 } from "lucide-react";
+import { Trash2, ClipboardPlus } from "lucide-react";
 
 
 export default function Services() {
-        const router = useRouter();
+    const router = useRouter();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [totalExpenses, setTotalExpenses] = useState(0);
     const [showDelete, setShowDelete] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
+    const [selectedService, setSelectedService] = useState(null);
+    const [showReceipt, setShowReceipt] = useState(false);
 
     useEffect(() => {
         fetchServices();
@@ -83,7 +85,7 @@ export default function Services() {
     }, [services, search]);
 
     const totalRevenue = filteredServices.reduce(
-        (sum, item) => sum + Number(item.finalAmount || 0),
+        (sum, item) => sum + Number(item.amount || 0),
         0
     );
 
@@ -131,6 +133,25 @@ export default function Services() {
                         <p className="text-gray-500 mt-2">
                             Monitor completed services, track revenue, manage expenses, and measure your salon's overall business performance.
                         </p>
+                    </div>
+                    <div className="flex justify-end gap-5 max-w-5xl  my-8 ">
+                        <button
+                            type="button"
+                            onClick={() => router.push("/admin")}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                        >
+                            <ArrowLeft size={18} />
+                            Back
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => router.push("/services/add")}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition"
+                        >
+                            <ClipboardPlus size={18} />
+                            Add Service
+                        </button>
                     </div>
 
                     <input
@@ -215,9 +236,9 @@ export default function Services() {
 
                             <tr>
 
-                                <th className="text-left p-4">
+                                {/* <th className="text-left p-4">
                                     ID
-                                </th>
+                                </th> */}
 
                                 <th className="text-left p-4">
                                     Client
@@ -230,14 +251,12 @@ export default function Services() {
                                 <th className="text-left p-4">
                                     Service
                                 </th>
+                                <th>Amount</th>
 
-                                <th className="text-left p-4">
+                                {/* <th className="text-left p-4">
                                     Staff
-                                </th>
+                                </th> */}
 
-                                <th className="text-left p-4">
-                                    Amt
-                                </th>
 
                                 {/* <th className="text-left p-4">
                   Status
@@ -289,12 +308,16 @@ export default function Services() {
 
                                 <tr
                                     key={item.id}
-                                    className="border-b hover:bg-gray-50"
+                                    onClick={() => {
+                                        setSelectedService(item);
+                                        setShowReceipt(true);
+                                    }}
+                                    className="border-b hover:bg-gray-50 cursor-pointer"
                                 >
 
-                                    <td className="p-4 text-sm ">
+                                    {/* <td className="p-4 text-sm ">
                                         {item.serviceId}
-                                    </td>
+                                    </td> */}
 
                                     <td className="p-4 text-sm">
                                         {item.customer}
@@ -308,13 +331,16 @@ export default function Services() {
                                         {item.service}
                                     </td>
 
-                                    <td className="p-4 text-sm">
-                                        {item.staff}
-                                    </td>
+
 
                                     <td className="p-4 text-sm font-semibold text-green-700">
-                                        ₦{Number(item.finalAmount).toLocaleString()}
+                                        ₦{Number(item.amount).toLocaleString()}
                                     </td>
+{/* 
+                                    <td className="p-4 text-sm">
+                                        {item.staff}
+                                    </td> */}
+
 
                                     {/* <td className="p-4 text-sm">
 
@@ -340,8 +366,12 @@ export default function Services() {
                                     <td className="p-4">
 
                                         <div className="flex justify-center gap-2">
+
                                             <button
-                                                onClick={() => openDeleteModal(item.id)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    openDeleteModal(item.id);
+                                                }}
                                                 title="Delete"
                                                 className="bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200 transition cursor-pointer"
                                             >
@@ -361,17 +391,191 @@ export default function Services() {
 
                 </div>
 
-<div className="max-w-5xl mx-auto mb-5 pt-10">
-    <button
-        type="button"
-        onClick={() => router.push("/admin")}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-    >
-        <ArrowLeft size={18} />
-        Go Back
-    </button>
-</div>
+
             </div>
+
+            {/* RECEIPT MODAL */}
+            {showReceipt && selectedService && (
+                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+
+                        {/* Buttons */}
+                        <div className="flex justify-end pr-2 pt-2">
+
+                            <button
+                                onClick={() => setShowReceipt(false)}
+                                className="text-red-800 p-2 border border-red-800 rounded-full hover:bg-red-800 hover:text-white transition-all"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            {/* <button
+                                    onClick={() => window.print()}
+                                    className="px-6 py-3 bg-blue-900 text-white rounded-xl hover:bg-blue-950"
+                                >
+                                    Print Receipt
+                                </button> */}
+                        </div>
+
+                        <div className="p-8">
+
+                            {/* Title */}
+                            <div className="flex items-center justify-between border-b pb-2">
+
+                                <div>
+                                    <h3 className="text-sm font-bold text-blue-900">
+                                        Service Receipt
+                                    </h3>
+
+                                    <p className="text-xs text-gray-500">
+                                        Transaction Details
+                                    </p>
+                                </div>
+
+                                <div className="text-right">
+
+                                    <p className="text-xs  text-gray-500">
+                                        Receipt No.
+                                    </p>
+
+                                    <p className="text-sm font-bold text-red-600">
+                                        {selectedService.serviceId}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            {/* Customer */}
+                            <div className="mt-2">
+
+                                <h4 className="text-sm font-bold text-gray-800 mb-2">
+                                    Customer Information
+                                </h4>
+
+                                <div className="grid grid-cols-2 gap-1">
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Name
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                                            {selectedService.customer}
+                                        </p>
+
+                                    </div>
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Date
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                                            {selectedService.date}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            {/* Service */}
+                            <div className="mt-2">
+
+                                <h4 className="text-sm font-bold text-gray-800 mb-4">
+                                    Service Information
+                                </h4>
+
+                                <div className="grid grid-cols-2 gap-1">
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Service
+                                        </p>
+
+                                        <p className="text-sm font-semibold mt-1">
+                                            {selectedService.service}
+                                        </p>
+
+                                    </div>
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Staff
+                                        </p>
+
+                                        <p className="text-sm font-semibold mt-1">
+                                            {selectedService.staff || "Not Assigned"}
+                                        </p>
+
+                                    </div>
+
+                                    <div className="bg-gray-50 rounded-xl p-2">
+
+                                        <p className="text-xs text-gray-500 uppercase">
+                                            Payment Method
+                                        </p>
+
+                                        <p className="text-sm font-semibold mt-1">
+                                            {selectedService.paymentMethod}
+                                        </p>
+
+                                    </div>
+
+                                    <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+
+                                        <p className="text-xs text-green-700 uppercase">
+                                            Amount Paid
+                                        </p>
+
+                                        <p className="text-sm font-bold text-green-600 mt-1">
+                                            ₦{Number(selectedService.amount).toLocaleString()}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            {/* Notes */}
+                            {selectedService.notes && (
+
+                                <div className="bg-gray-50 rounded-xl p-2 mt-1">
+                                    <p className="text-xs text-gray-500 uppercase">
+                                        Notes
+                                    </p>
+                                    <p className="text-sm font-semibold mt-1">
+                                        {selectedService.notes}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Footer */}
+                            <div className="border-t mt-4 pt-3 text-center">
+
+                                <p className="text-red-800 font-semibold">
+                                    Thank you for choosing Paradise WBL.
+                                </p>
+
+                                <p className="text-sm text-gray-500 mt-1">
+                                    Beauty • Nails • Pedicure • Professional Training
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            )}
 
             {/* DELETE MODAL  */}
             {showDelete && (
