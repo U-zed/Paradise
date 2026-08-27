@@ -159,7 +159,7 @@ const handleSubmit = async (e) => {
   </Link>
 
   <Link
-    href="/register"
+    href="/training"
     onClick={() => setLoading(true)}
     className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
     hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"

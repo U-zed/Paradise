@@ -18,7 +18,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="text-center pt-28 bg-orange-50 min-h-screen">
+    <main className="text-center pt-28 bg-green-50 min-h-screen">
 
     <>
       {loading && <Loader />}
@@ -79,7 +79,7 @@ export default function Home() {
   </Link>
 
   <Link
-    href="/register"
+    href="/training"
     onClick={() => setLoading(true)}
     className="bg-red-800 text-white px-6 py-3 rounded-full shadow-md
     hover:bg-white hover:text-red-700 border border-red-700 transition-all text-sm sm:text-base"

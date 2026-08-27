@@ -62,7 +62,7 @@ const faqs = [
 ];
 
   return (
-    <main className="min-h-screen bg-orange-50 pt-11 px-4">
+    <main className="min-h-screen bg-green-50 pt-11 px-4">
       <motion.div
         className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-pink-100"
         initial={{ opacity: 0, y: 30 }}

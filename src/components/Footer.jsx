@@ -65,7 +65,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-pink-100">
             <li><Link href="/" onClick={() => setLoading(true)} className="hover:text-white">Home</Link></li>
             <li><Link href="/book" onClick={() => setLoading(true)} className="hover:text-white">Book Appointment</Link></li>
-            <li><Link href="/register" onClick={() => setLoading(true)} className="hover:text-white">Train With Us</Link></li>
+            <li><Link href="/training" onClick={() => setLoading(true)} className="hover:text-white">Train With Us</Link></li>
             <li><Link href="/about" onClick={() => setLoading(true)} className="hover:text-white">About Paradise</Link></li>
             <li><Link href="/contact" onClick={() => setLoading(true)} className="hover:text-white">Contact Us</Link></li>
             <li><Link href="/products" onClick={() => setLoading(true)} className="hover:text-white">Our Products</Link></li>

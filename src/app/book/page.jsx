@@ -390,7 +390,7 @@ export default function Booking() {
                 className="flex flex-col items-center text-center space-y-4">
                 <h3 className="text-xl md:text-2xl font-semibold text-red-700">We Got Your Booking!</h3>
                 <p className="text-black text-sm md:text-base"> Thank you,  <span className="text-blue-900 italic">{name}</span>, for choosing Paradise! <br /> We will reach out to you via <span className="italic text-blue-900">{contact}</span> for confirmation. </p>
-                <div className="bg-orange-50 text-black rounded-xl border border-orange-200 text-sm md:text-base w-full max-w-md overflow-hidden">
+                <div className="bg-green-50 text-black rounded-xl border border-orange-200 text-sm md:text-base w-full max-w-md overflow-hidden">
                   <div className="grid grid-cols-2 border border-white py-2 px-3">
                     <p className="text-left">Date & Time:</p>
                     <p className="text-right">{date} {time}</p>
@@ -470,7 +470,7 @@ export default function Booking() {
                 </button>
 
                 <button
-                  className="w-full bg-orange-600 text-white hover:bg-orange-500 transition-all cursor-pointer rounded-xl py-2"
+                  className="w-full bg-orange-600 text-white hover:bg-green-500 transition-all cursor-pointer rounded-xl py-2"
                   onClick={() => {
                     setSelectedServices((prev) =>
                       prev.filter(
