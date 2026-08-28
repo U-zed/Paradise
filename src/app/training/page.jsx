@@ -116,7 +116,7 @@ export default function TrainingPage() {
 
             {/* <div className="mt-8 flex flex-wrap justify-center gap-4">
 
-              <Link href="/training/training">
+              <Link href="/training/register">
                 <button className="bg-pink-600 hover:bg-pink-700 px-8 py-4 rounded-full font-semibold flex items-center gap-2">
                   Register Now
                   <ArrowRight size={18}/>
