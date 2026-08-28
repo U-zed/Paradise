@@ -95,7 +95,7 @@ export default function TrainingPage() {
           className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/65 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
 
           <div className="text-center text-white px-6 max-w-4xl">
 
@@ -107,10 +107,10 @@ export default function TrainingPage() {
               Turn Your Passion for Beauty Into a Career.
             </h1>
 
-         <p className="text-center text-gray-100 mt-4 max-w-3xl mx-auto">
+         <p className="text-center text-yellow-50 mt-4 max-w-3xl mx-auto">
   At Paradise WBL, we believe beauty is a profession. Take the next step toward becoming a{" "}
-  <i className="text-red-500">certified beauty professional</i> through{" "}
-  <i className="text-red-500">practical, hands-on training</i>. Gain real salon experience,
+  <i className="text-blue-500">certified beauty professional</i> through{" "}
+  <i className="text-blue-500">practical, hands-on training</i>. Gain real salon experience,
   business knowledge and professional certification to confidently start or grow your beauty career.
 </p>
 
@@ -137,7 +137,7 @@ export default function TrainingPage() {
    
 <section className="py-10 bg-white">
 
-<div className="max-w-7xl mx-auto px-6">
+<div className="max-w-7xl mx-auto px-2">
 
 <div className="text-center">
 

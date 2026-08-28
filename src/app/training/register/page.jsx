@@ -159,7 +159,7 @@ const newApplicationId =
     <main className="min-h-screen bg-gray-50 pt-20 pb-16">
 
       {/* FORM CONTAINER */}
-      <div className="max-w-4xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-2">
 
         {/* BACK BUTTON */}
         <button
@@ -690,9 +690,9 @@ const newApplicationId =
       {/* SUCCESSFUL MODAL */}
       <AnimatePresence>
        {showSuccess && (
-  <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+  <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center px-3">
 
-    <div className="bg-white w-full max-w-md rounded-xl p-4 text-center shadow-2xl max-h-[90vh]">
+    <div className="bg-white w-full max-w-md rounded-xl p-4 text-center shadow-2xl max-h-[97vh]">
 
 
       {/* ========================= */}
@@ -705,7 +705,7 @@ const newApplicationId =
         onClick={() => router.push("/training")}
         className=" w-fit  text-red-700 hover:bg-red-700 hover:text-white p-1 rounded-full font-bold transition-all cursor-pointer"
       >
- <X size={20} />      
+ <X size={25} />      
  </button>
 </div>
 
@@ -719,7 +719,7 @@ const newApplicationId =
 
   
       {/* TITLE */}
-      <h2 className="text-xl font-bold text-blue-950">
+      <h2 className="text-2xl font-bold text-blue-950 py-2">
         Congratulations!
       </h2>
 
@@ -735,7 +735,7 @@ We appreciate your interest in <b>Paradise WBL Training Program</b>.
 
       <div className=" py-2">
 
-      <div className="flex justify-between items-center text-center  px-3">
+      <div className="flex justify-between items-center text-center py-2 px-3">
 
         <p className="text-sm  text-gray-500 font-semibold">
            Application ID:
@@ -762,8 +762,8 @@ We appreciate your interest in <b>Paradise WBL Training Program</b>.
       </div>
 
         <p className="text-sm text-red-700 py-2 text-center">
-          Please send your <b>Application ID</b> to Paradise WBL Studio
-          on <b>WhatsApp</b> to continue with your payment and enrollment. 
+          Please send your Application ID to Paradise WBL Studio
+          on WhatsApp to continue with your payment and enrollment. 
         </p>
 
       </div>
@@ -791,7 +791,7 @@ Thank you.`;
               "noopener,noreferrer"
             );
           }}
-          className="mt-2 w-full bg-green-700 hover:bg-green-700 text-white py-3 px-5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
+          className="my-2 w-full bg-green-700 hover:bg-green-700 text-white py-3 px-5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
         >
           <MessageCircle size={21} />
           Click To Send
