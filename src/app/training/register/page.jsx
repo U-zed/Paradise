@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   CalendarDays,
   ArrowLeft,
@@ -56,8 +55,8 @@ const courseInfo = {
   },
 };
 
-export default function TrainingRegistration() {
-  const searchParams = useSearchParams();
+function TrainingRegistrationContent() {
+    const searchParams = useSearchParams();
   const router = useRouter();
 
   const course = searchParams.get("course");
@@ -805,5 +804,24 @@ Thank you.`;
       </AnimatePresence>
 
     </main>
+  );
+}
+
+export default function TrainingRegistration() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-900 mx-auto mb-4" />
+            <p className="text-gray-600 font-medium">
+              Loading registration...
+            </p>
+          </div>
+        </main>
+      }
+    >
+      <TrainingRegistrationContent />
+    </Suspense>
   );
 }
