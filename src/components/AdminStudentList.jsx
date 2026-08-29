@@ -104,14 +104,15 @@ export default function AdminStudentList() {
     className="bg-gray-50  rounded-md shadow pt-1 pb-5 mb-3 text-black"
   >
 
-    {/* PERSONAL INFORMATION */}
-    <div className=" bg-gray-50   p-4">
+    <div className=" bg-gray-50 grid md:grid-cols-2  p-4">
 
-      <h3 className="text-center font-bold text-red-900 border-b pb-2 mb-4">
+    {/* PERSONAL INFORMATION */}
+<div className=" bg-gray-50  p-4">
+    <h3 className="text-center font-bold text-red-900 border-b pb-2 mb-4">
         Personal Information
       </h3>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+      <div className="grid  gap-2 text-sm">
 
         <div className="flex items-center justify-between">
           <p className="text-gray-500">Name:</p>
@@ -142,14 +143,17 @@ export default function AdminStudentList() {
         </div>
 
       </div>
+</div>
+    
 
     {/* TRAINING INFORMATION */}
+<div className=" bg-gray-50  p-4">
 
-<h3 className="text-center font-bold text-red-900 border-b pb-2 mb-4 pt-6 ">
+<h3 className="text-center font-bold text-red-900 border-b pb-2 mb-4  ">
         Training Information
       </h3>
 
-<div className="grid md:grid-cols-2 gap-4 text-sm">
+<div className="grid  gap-2 text-sm">
 
         <div className="flex items-center justify-between">
           <p className="text-gray-500">Program:</p>
@@ -196,42 +200,43 @@ export default function AdminStudentList() {
 
       </div>
     </div>
+</div>
 
     {/* EMERGENCY CONTACT */}
-    <div className="mt-4 bg-gray-50  p-4">
+    <div className=" bg-gray-50  p-4">
 
       <h3 className="text-center font-bold text-red-900 border-b pb-2 mb-4 ">
         Emergency / Guardian Information
       </h3>
 
-      <div className="grid md:grid-cols-2 gap-4 text-sm">
+      <div className="grid md:grid-cols-3 gap-4 text-sm">
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between md:grid">
           <p className="text-gray-500">
             Contact Name:
           </p>
 
-          <p className="font-semibold text-right">
+          <p className="font-semibold text-right md:text-left">
             {student.emergencyName || "N/A"}
           </p>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between md:grid">
           <p className="text-gray-500">
             Contact Phone:
           </p>
 
-          <p className="font-semibold text-right">
+          <p className="font-semibold text-right md:text-left">
             {student.emergencyPhone || "N/A"}
           </p>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between md:grid">
           <p className="text-gray-500">
             Relationship:
           </p>
 
-          <p className="font-semibold text-right">
+          <p className="font-semibold text-right md:text-left">
             {student.emergencyRelationship || "N/A"}
           </p>
         </div>
